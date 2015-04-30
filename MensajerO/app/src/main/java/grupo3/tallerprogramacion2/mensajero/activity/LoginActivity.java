@@ -3,25 +3,22 @@ package grupo3.tallerprogramacion2.mensajero.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.constants.ResponseConstants;
+import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
+import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
-import grupo3.tallerprogramacion2.mensajero.service.impl.RestServiceImpl;
-import grupo3.tallerprogramacion2.mensajero.service.impl.RestServiceMockImpl;
+
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -29,7 +26,8 @@ public class LoginActivity extends ActionBarActivity {
     public final static String USER_DATA = "grupo3.tallerprogramacion2.mensajero.activity.LoginActivity.USER_DATA";
 
      // Keep track of the login task to ensure we can cancel it if requested.
-    private UserLoginTask mAuthTask = null;
+    //private UserLoginTask mAuthTask = null;
+    private final RestService restService = RestServiceFactory.getRestService();
 
     // UI references.
     private EditText mEmailView;
@@ -76,17 +74,10 @@ public class LoginActivity extends ActionBarActivity {
 
     public void loginClick(View view) {
         attemptLogin();
-        //Intent intent = new Intent(this, DashboardActivity.class);
-
-        //startActivity(intent);
     }
 
 
     public void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -130,10 +121,40 @@ public class LoginActivity extends ActionBarActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password, this);
-            mAuthTask.execute((Void) null);
+            restService.login(email, password, this);
         }
     }
+
+    public void processLoginResponse(UserDTO userDTO) {
+        if(ResponseConstants.OK_RESPONSE.equals(userDTO.getResult())) {
+            Intent intent = new Intent(this, DashboardActivity.class);
+            intent.putExtra(RestService.LOGIN_RESPONSE_NAME, userDTO.getName());
+            intent.putExtra(RestService.LOGIN_TOKEN, userDTO.getToken());
+            startActivity(intent);
+            finish();
+        } else {
+            showCredentialsError();
+        }
+
+    }
+
+    public void handleError(UserDTO userDTO) {
+        switch (userDTO.getCode()) {
+            case 1: showCredentialsError();
+            case 2: showCredentialsError();
+            default: handleUnexpectedError(null);
+        }
+    }
+
+    public void handleUnexpectedError(Exception error) {
+        // TODO define what to show on unexpected errors.
+    }
+
+    private void showCredentialsError() {
+        mEmailView.setError(getString(R.string.error_invalid_email));
+        mPasswordView.setError(getString(R.string.error_field_required));
+    }
+
 
     private boolean isEmailValid(String email) {
         //TODO: Add proper validations.
@@ -179,59 +200,6 @@ public class LoginActivity extends ActionBarActivity {
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, JSONObject> {
-
-
-        private final Activity parentActivity;
-        private final String mEmail;
-        private final String mPassword;
-        // TODO: Configure proper IoC!!
-        private final RestService restService = RestServiceMockImpl.getInstance();
-
-        UserLoginTask(String email, String password, Activity parentActivity) {
-            this.mEmail = email;
-            this.mPassword = password;
-            this.parentActivity = parentActivity;
-        }
-
-        @Override
-        protected JSONObject doInBackground(Void... params) {
-            return restService.login(this.mEmail, this.mPassword);
-        }
-
-        @Override
-        protected void onPostExecute(final JSONObject response) {
-            mAuthTask = null;
-            showProgress(false);
-            try {
-                if (response != null && response.getString(RestService.RESPONSE_CODE).equals("OK")) {
-                    Intent intent = new Intent(this.parentActivity, DashboardActivity.class);
-                    intent.putExtra(RestService.LOGIN_RESPONSE_NAME, response.getString(RestService.LOGIN_RESPONSE_NAME));
-                    intent.putExtra(RestService.LOGIN_TOKEN, response.getString(RestService.LOGIN_TOKEN));
-                    startActivity(intent);
-                    finish();
-                } else {
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
-                }
-            } catch (JSONException e) {
-
-            }
-
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
         }
     }
 }
