@@ -1,55 +1,50 @@
 package grupo3.tallerprogramacion2.mensajero.service.impl;
 
-import android.app.DownloadManager;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import grupo3.tallerprogramacion2.mensajero.activity.LoginActivity;
+import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
+import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
+import grupo3.tallerprogramacion2.mensajero.network.GsonRequest;
+import grupo3.tallerprogramacion2.mensajero.factory.RequestQueueFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 public class RestServiceImpl implements RestService {
 
-    private static RestServiceImpl ourInstance = new RestServiceImpl();
+    private static RestServiceImpl ourInstance = null;
+    private static RequestQueueFactory requestQueueFactory;
 
     public static RestServiceImpl getInstance() {
+        if(ourInstance == null) {
+            ourInstance = new RestServiceImpl();
+        }
         return ourInstance;
     }
 
-    private RestServiceImpl() { }
-
-    @Override
-    public JSONObject login(String username, String password) {
-        //TODO:Integrar con rest services reales usando voley como en el ejemplo de abajo
-        // Instantiate the RequestQueue.
-        //RequestQueue queue = Volley.newRequestQueue(this); TODO: Pasar el contexto por parámetro al servicio.
-        String url ="http://localhost/login/";
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Handle response
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        // Add the request to the RequestQueue.
-        //queue.add(stringRequest); // TODO: descomentar cuando se haya inicializado correctamente la queue.
-
-        return null;
+    protected RestServiceImpl() {
     }
 
+    @Override
+    public void login(String username, String password, final LoginActivity context) {
+        String url = UrlConstants.getLoginServiceUrl() + username + "/" + password;
 
+        // Request a string response from the provided URL.
+        GsonRequest request = new GsonRequest(url, UserDTO.class, null,
+                new Response.Listener<UserDTO>() {
+                    @Override
+                    public void onResponse(UserDTO user) {
+                        context.processLoginResponse(user);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        context.handleUnexpectedError(error);
+                    }
+        });
+
+        // Add the request to the RequestQueue.
+        RequestQueueFactory.getRequestQueue(context).add(request);
+    }
 }
