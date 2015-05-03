@@ -1,5 +1,6 @@
 package grupo3.tallerprogramacion2.mensajero.service;
 
+import grupo3.tallerprogramacion2.mensajero.activity.CreateUserActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.LoginActivity;
 
 public interface RestService {
@@ -9,4 +10,5 @@ public interface RestService {
 
     public void login(String username, String password, final LoginActivity context);
 
+    public void createUser(String userName, String fullName, String password, final CreateUserActivity context);
 }

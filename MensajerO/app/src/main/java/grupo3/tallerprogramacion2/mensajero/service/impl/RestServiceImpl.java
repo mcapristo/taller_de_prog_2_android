@@ -3,6 +3,7 @@ package grupo3.tallerprogramacion2.mensajero.service.impl;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import grupo3.tallerprogramacion2.mensajero.activity.CreateUserActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.LoginActivity;
 import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
@@ -46,5 +47,9 @@ public class RestServiceImpl implements RestService {
 
         // Add the request to the RequestQueue.
         RequestQueueFactory.getRequestQueue(context).add(request);
+    }
+
+    @Override
+    public void createUser(String userName, String fullName, String password, final CreateUserActivity context) {
     }
 }

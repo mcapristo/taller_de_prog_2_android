@@ -11,43 +11,54 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/Pass"
+        android:id="@+id/CreateUser_f_Password"
         android:hint="@string/prompt_password"
-        android:layout_below="@+id/Name"
-        android:layout_alignLeft="@+id/Name"
-        android:layout_alignStart="@+id/Name" />
+        android:layout_below="@+id/CreateUser_f_FullName"
+        android:layout_alignLeft="@+id/CreateUser_f_FullName"
+        android:layout_alignStart="@+id/CreateUser_f_FullName" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/UserName"
+        android:id="@+id/CreateUser_f_UserName"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="49dp"
-        android:hint="User Name" />
+        android:hint="UserName" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/Name"
+        android:id="@+id/CreateUser_f_FullName"
         android:hint="FullName"
-        android:layout_below="@+id/UserName"
-        android:layout_alignLeft="@+id/UserName"
-        android:layout_alignStart="@+id/UserName" />
+        android:layout_below="@+id/CreateUser_f_UserName"
+        android:layout_alignLeft="@+id/CreateUser_f_UserName"
+        android:layout_alignStart="@+id/CreateUser_f_UserName" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/CreateButton"
-        android:layout_below="@+id/Pass"
+        android:text="Create"
+        android:id="@+id/CreateUser_b_Create"
+        android:layout_below="@+id/CreateUser_f_Password"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="38dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/CreateUser_b_Cancel"
+        android:layout_below="@+id/CreateUser_b_Create"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 </RelativeLayout>

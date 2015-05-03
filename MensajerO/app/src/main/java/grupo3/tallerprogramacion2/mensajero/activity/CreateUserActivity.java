@@ -1,18 +1,39 @@
 package grupo3.tallerprogramacion2.mensajero.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
+import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 public class CreateUserActivity extends ActionBarActivity {
+    private final RestService restService = RestServiceFactory.getRestService();
+
+    // UI references.
+    private EditText mUserNameView;
+    private EditText mFullNameView;
+    private EditText mPasswordView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
+
+        mUserNameView = (EditText) findViewById(R.id.CreateUser_f_UserName);
+        mFullNameView = (EditText) findViewById(R.id.CreateUser_f_FullName);
+        mPasswordView = (EditText) findViewById(R.id.CreateUser_f_Password);
+        findViewById(R.id.CreateUser_b_Cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CreateUserActivity.this, LoginActivity.class));
+            }
+        });
     }
 
 
@@ -36,5 +57,18 @@ public class CreateUserActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void createUserClick(View view) {
+        mUserNameView.setError(null);
+        mFullNameView.setError(null);
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
+        String userName = mUserNameView.getText().toString();
+        String fullName = mFullNameView.getText().toString();
+        String password = mPasswordView.getText().toString();
+
+        restService.createUser(userName, fullName, password, this);
     }
 }
