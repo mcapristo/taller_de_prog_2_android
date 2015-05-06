@@ -26,6 +26,18 @@
             android:name=".activity.CreateUserActivity"
             android:label="Create User" >
         </activity>
+        <activity
+            android:name=".activity.HomeActivity"
+            android:label="@string/title_activity_home" >
+        </activity>
+        <activity
+            android:name=".activity.ChatFragment"
+            android:label="@string/title_activity_chat_fragment" >
+        </activity>
+        <activity
+            android:name=".activity.ContactFragment"
+            android:label="@string/title_activity_contact_fragment" >
+        </activity>
     </application>
 
 </manifest>

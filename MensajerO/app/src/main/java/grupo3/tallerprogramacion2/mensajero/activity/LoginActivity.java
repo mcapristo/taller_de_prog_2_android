@@ -133,7 +133,7 @@ public class LoginActivity extends ActionBarActivity {
 
     public void processLoginResponse(UserDTO userDTO) {
         if(ResponseConstants.OK_RESPONSE.equals(userDTO.getResult())) {
-            Intent intent = new Intent(this, DashboardActivity.class);
+            Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra(RestService.LOGIN_RESPONSE_NAME, userDTO.getName());
             intent.putExtra(RestService.LOGIN_TOKEN, userDTO.getToken());
             startActivity(intent);
