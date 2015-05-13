@@ -17,6 +17,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".activity.DashboardActivity"
@@ -37,6 +38,11 @@
         <activity
             android:name=".activity.ContactFragment"
             android:label="@string/title_activity_contact_fragment" >
+        </activity>
+        <activity
+            android:name=".activity.UserDetail"
+            android:label="@string/title_activity_user_detail" >
+
         </activity>
     </application>
 

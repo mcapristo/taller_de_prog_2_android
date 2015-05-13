@@ -6,6 +6,7 @@ public class UserDTO extends BaseDTO {
     private String name;
     private String password;
     private String token;
+    private boolean online;
 
     public String getUsername() {
         return username;
@@ -37,5 +38,13 @@ public class UserDTO extends BaseDTO {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean isOnline(){
+        return this.online;
+    }
+
+    public void setOnline(boolean online){
+        this.online = online;
     }
 }
