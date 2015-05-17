@@ -19,12 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
+import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
+import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 public class ChatFragment extends Fragment {
     public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
     SwipeRefreshLayout swipeLayout;
-    protected ArrayList<UserDTO> contactsWithConvs = new ArrayList<UserDTO>();
+    protected ArrayList<String> contactsWithConvs = new ArrayList<String>();
+    private final RestService restService = RestServiceFactory.getRestService();
 
     public static final ContactFragment newInstance(String message)
     {
@@ -52,7 +56,6 @@ public class ChatFragment extends Fragment {
         });
         swipeLayout.setRefreshing(true);
 
-
         return rootView;
     }
 
@@ -68,25 +71,20 @@ public class ChatFragment extends Fragment {
     }
 
     private void getContactsFromDB(){
-        //TODO: obtener los usuarios con conversaciones activas del server
-        UserDTO uriel = new UserDTO();
-        uriel.setUsername("UriKusnesov"); uriel.setName("Uriel");
-        UserDTO ramiro = new UserDTO();
-        ramiro.setUsername("RamiroDoi"); ramiro.setName("Ramiro");
-        this.contactsWithConvs = new ArrayList<UserDTO>();
-        this.contactsWithConvs.add(uriel);this.contactsWithConvs.add(ramiro);
-        //this.contacts = server.obtenerUsuariosConConversacion();
+        Bundle args = getActivity().getIntent().getExtras();
+        String myUserName= args.getString(RestService.LOGIN_RESPONSE_NAME);
+        String myToken= args.getString(RestService.LOGIN_TOKEN);
+        restService.getConversations(myUserName, myToken, this, getActivity());
+    }
+
+    public void PopulateContacts(ArrayList<ConversationDTO> chats){
+        //TODO: get my username
+        String myUsername = "";
+        this.contactsWithConvs = getUsersFromConversation(chats, myUsername);
 
         ListView lst = (ListView) getView().findViewById(R.id.listView);
-        /*ArrayAdapter<Event> adapter = new ArrayAdapter<com.smule.entrepreneurevents.model.Event>(getActivity(),
-                android.R.layout.simple_list_item_1, this.events);*/
 
-
-        List<String> contactsWithConvUsernames = new ArrayList<String>();
-        for (int i=0; i<this.contactsWithConvs.size();i++){
-            contactsWithConvUsernames.add(this.contactsWithConvs.get(i).getUsername());
-        }
-        LazyAdapter adapter=new LazyAdapter(getActivity(), this.contactsWithConvs,contactsWithConvUsernames);
+        LazyAdapter adapter=new LazyAdapter(getActivity(), this.contactsWithConvs);
 
         swipeLayout.setRefreshing(false);
         lst.setAdapter(adapter);
@@ -99,9 +97,8 @@ public class ChatFragment extends Fragment {
                     if (position <= contactsWithConvs.size()) {
                         //TODO: mandar a ConversationActivity.class en vez de LoginActivity.class
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        UserDTO contact;
-                        contact = contactsWithConvs.get(position);
-                        intent.putExtra("contactUsername", contact.getUsername());
+                        String contact = contactsWithConvs.get(position);
+                        intent.putExtra("contactUsername", contact);
                         startActivity(intent);
                     }
                 } else {
@@ -113,5 +110,22 @@ public class ChatFragment extends Fragment {
             }
         });
 
+    }
+
+    private ArrayList<String> getUsersFromConversation(ArrayList<ConversationDTO> chats, String myUserName){
+        ArrayList<String> otherUsernames = new ArrayList<String>();
+
+        for(int i=0; i < chats.size(); i++){
+            if(chats.get(i).getUsername1() != myUserName){
+                otherUsernames.add(chats.get(i).getUsername1());
+            }else {
+                otherUsernames.add(chats.get(i).getUsername2());
+            }
+        }
+        return otherUsernames;
+    }
+
+    public void handleUnexpectedError(Exception error) {
+        // TODO define what to show on unexpected errors.
     }
 }

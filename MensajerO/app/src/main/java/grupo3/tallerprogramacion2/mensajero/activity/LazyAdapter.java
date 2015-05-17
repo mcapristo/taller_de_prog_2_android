@@ -20,14 +20,14 @@ import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 public class LazyAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
-    private final ArrayList<UserDTO> contacts;
-    public LazyAdapter(Activity context, ArrayList<UserDTO> contacts, List<String> contactsUsernames ) {
+    private final List<String> contacts;
+    public LazyAdapter(Activity context, List<String> contactsUsernames ) {
         super(context, R.layout.list_item_event,contactsUsernames);
 
         // TODO Auto-generated constructor stub
 
         this.context=context;
-        this.contacts=contacts;
+        this.contacts=contactsUsernames;
     }
 
     public View getView(int position,View view,ViewGroup parent) {
@@ -36,7 +36,7 @@ public class LazyAdapter extends ArrayAdapter<String> {
 
         TextView txtTitle = (TextView) rowView.findViewById(R.id.contact);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        txtTitle.setText(contacts.get(position).getName());
+        txtTitle.setText(contacts.get(position));
         //imageView.setImageResource(imgid[position]);
         return rowView;
 

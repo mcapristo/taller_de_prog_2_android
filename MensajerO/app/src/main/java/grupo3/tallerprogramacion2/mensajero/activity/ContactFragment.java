@@ -19,12 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
+import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
+import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 public class ContactFragment extends Fragment {
     public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
     SwipeRefreshLayout swipeLayout;
-    protected ArrayList<UserDTO> contacts = new ArrayList<UserDTO>();
+    private ArrayList<String> contacts = new ArrayList<String>();
+    private final RestService restService = RestServiceFactory.getRestService();
 
     public static final ContactFragment newInstance(String message)
     {
@@ -68,29 +72,20 @@ public class ContactFragment extends Fragment {
     }
 
     private void getContactsFromDB(){
-        //TODO: obtener los contactos del server
-        UserDTO uriel = new UserDTO();
-        uriel.setUsername("UriKusnesov"); uriel.setName("Uriel");
-        UserDTO ramiro = new UserDTO();
-        ramiro.setUsername("RamiroDoi"); ramiro.setName("Ramiro");
-        UserDTO mateo = new UserDTO();
-        mateo.setUsername("MateoBosco"); mateo.setName("Mateo");
-        UserDTO matias = new UserDTO();
-        matias.setUsername("MatiCapristo"); matias.setName("Matias");
-        this.contacts = new ArrayList<UserDTO>();
-        this.contacts.add(uriel);this.contacts.add(ramiro);this.contacts.add(mateo);this.contacts.add(matias);
-        //this.contacts = server.obtenerUsuarios();
+        Bundle args = getActivity().getIntent().getExtras();
+        String myUserName= args.getString(RestService.LOGIN_RESPONSE_NAME);
+        String myToken= args.getString(RestService.LOGIN_TOKEN);
 
+        restService.getUsers(myUserName, myToken, this, getActivity());
+    }
+
+    public void PopulateContacts(ArrayList<UserDTO> allContacts) {
         ListView lst = (ListView) getView().findViewById(R.id.listView);
-        /*ArrayAdapter<Event> adapter = new ArrayAdapter<com.smule.entrepreneurevents.model.Event>(getActivity(),
-                android.R.layout.simple_list_item_1, this.events);*/
 
-
-        List<String> contactsUsernames = new ArrayList<String>();
-        for (int i=0; i<this.contacts.size();i++){
-            contactsUsernames.add(this.contacts.get(i).getUsername());
+        for (int i = 0; i < allContacts.size(); i++) {
+            this.contacts.add(allContacts.get(i).getUsername());
         }
-        LazyAdapter adapter=new LazyAdapter(getActivity(), this.contacts,contactsUsernames);
+        LazyAdapter adapter = new LazyAdapter(getActivity(), this.contacts);
 
         swipeLayout.setRefreshing(false);
         lst.setAdapter(adapter);
@@ -103,9 +98,8 @@ public class ContactFragment extends Fragment {
                     if (position <= contacts.size()) {
                         //TODO: mandar a ConversationActivity.class en vez de LoginActivity.class
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        UserDTO contact;
-                        contact = contacts.get(position);
-                        intent.putExtra("contactUsername", contact.getUsername());
+                        String contact = contacts.get(position);
+                        intent.putExtra("contactUsername", contact);
                         startActivity(intent);
                     }
                 } else {
@@ -116,7 +110,9 @@ public class ContactFragment extends Fragment {
                 }
             }
         });
-
     }
 
+    public void handleUnexpectedError(Exception error) {
+        // TODO define what to show on unexpected errors.
+    }
 }

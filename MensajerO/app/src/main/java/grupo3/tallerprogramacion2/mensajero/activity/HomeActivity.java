@@ -1,5 +1,6 @@
 package grupo3.tallerprogramacion2.mensajero.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -10,8 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
+import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 public class HomeActivity extends ActionBarActivity implements ActionBar.TabListener {
+
     MyPageAdapter pageAdapter;
     ViewPager mViewPager;
 
@@ -47,7 +51,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_events, menu);
+        getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
 
@@ -60,6 +64,11 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.action_exit) {
+            finish();
             return true;
         }
 
@@ -80,4 +89,9 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
 
     }
+
+/*    public void onBackPressed() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }*/
 }
