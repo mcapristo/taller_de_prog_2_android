@@ -9,7 +9,7 @@ import grupo3.tallerprogramacion2.mensajero.network.mock.HttpStackMock;
 
 public class RequestQueueFactory {
 
-    private static boolean useMockedServer = true;
+    private static boolean useMockedServer = false;
 
     public static RequestQueue getRequestQueue(Context context) {
         if(useMockedServer) {

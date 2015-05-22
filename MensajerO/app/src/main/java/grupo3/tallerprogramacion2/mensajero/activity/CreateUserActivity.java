@@ -8,7 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.constants.ResponseConstants;
+import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
@@ -70,5 +76,26 @@ public class CreateUserActivity extends ActionBarActivity {
         String password = mPasswordView.getText().toString();
 
         restService.createUser(userName, fullName, password, this);
+    }
+
+    public void processCreateUserRequest(UserDTO userDTO) {
+        if(ResponseConstants.OK_RESPONSE.equals(userDTO.getResult())) {
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra(RestService.LOGIN_RESPONSE_NAME, userDTO.getName());
+            intent.putExtra(RestService.LOGIN_TOKEN, userDTO.getToken());
+            startActivity(intent);
+            finish();
+        } else {
+            // showCredentialsError();
+        }
+    }
+
+    public void processCreateUserResponse(JSONObject response) {
+        // String username = response.getJSONObject("Data").getString("username");
+        // String name = (String) response.getString("Name");
+        Intent intent = new Intent(this, CreateUserResponseActivity.class);
+        intent.putExtra("CreateUserResponse_f_UserName", response.toString());
+        startActivity(intent);
+        finish();
     }
 }

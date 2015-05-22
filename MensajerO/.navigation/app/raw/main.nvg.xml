@@ -22,6 +22,22 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "grupo3.tallerprogramacion2.mensajero.activity.UserDetail"/>
+      <point      
+        x = "500"      
+        y = "2860"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.MenuState"      
+        className = "grupo3.tallerprogramacion2.mensajero.activity.UserDetail"/>
+      <point      
+        x = "1768"      
+        y = "2860"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "grupo3.tallerprogramacion2.mensajero.activity.DashboardActivity"/>
       <point      
         x = "500"      
@@ -38,6 +54,22 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "grupo3.tallerprogramacion2.mensajero.activity.HomeActivity"/>
+      <point      
+        x = "500"      
+        y = "4240"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.MenuState"      
+        className = "grupo3.tallerprogramacion2.mensajero.activity.HomeActivity"/>
+      <point      
+        x = "1768"      
+        y = "4240"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "grupo3.tallerprogramacion2.mensajero.activity.CreateUserActivity"/>
       <point      
         x = "2216"      
@@ -50,6 +82,22 @@
       <point      
         x = "3484"      
         y = "120"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "grupo3.tallerprogramacion2.mensajero.activity.ContactFragment"/>
+      <point      
+        x = "500"      
+        y = "5620"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "grupo3.tallerprogramacion2.mensajero.activity.ChatFragment"/>
+      <point      
+        x = "550"      
+        y = "5670"/>
     </statePointEntry>
   </locations>
 </navigationModel>

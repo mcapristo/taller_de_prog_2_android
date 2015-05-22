@@ -2,8 +2,16 @@ package grupo3.tallerprogramacion2.mensajero.service.impl;
 
 import android.support.v4.app.FragmentActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +45,7 @@ public class RestServiceImpl implements RestService {
     protected RestServiceImpl() {
     }
 
+    /*
     @Override
     public void login(String username, String password, final LoginActivity context) {
         String url = UrlConstants.getLoginServiceUrl() + username + "/" + password;
@@ -59,35 +68,73 @@ public class RestServiceImpl implements RestService {
         // Add the request to the RequestQueue.
         RequestQueueFactory.getRequestQueue(context).add(request);
     }
+    */
 
     @Override
-    public void createUser(String userName, String fullName, String password, final CreateUserActivity context) {
+    public void login(final String username, final String password, final LoginActivity context) {
+        String url = UrlConstants.getLoginServiceUrl();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // handle response
+                        context.processLoginResponse(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // handle error
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("password", password);
+                return headers;
+            }
+        };
+
+        req.setRetryPolicy(new DefaultRetryPolicy(10000,
+                5,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // Add the request to the RequestQueue.
+        Request response = RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
     @Override
-    public void getUsers(String userName, String token, final ContactFragment fragment, final FragmentActivity context) {
-        String url = UrlConstants.getUserServiceUrl();
+    public void createUser(final String userName, final String fullName, final String password, final CreateUserActivity context) {
+        String url = UrlConstants.getCreateUserServiceUrl();
 
-        Map<String, String> headers = new HashMap<String, String>();
-        headers.put("username", userName);
-        headers.put("token", token);
+        // Post params to be sent to the server
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("username", userName);
+        params.put("name", fullName);
+        params.put("password", password);
 
-        GsonRequest request = new GsonRequest(url, UserDTO[].class, headers,
-                new Response.Listener<ArrayList<UserDTO>>() {
+        JsonObjectRequest req = new JsonObjectRequest(url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(ArrayList<UserDTO> users) {
-                        fragment.PopulateContacts(users);
+                    public void onResponse(JSONObject response) {
+                        String result = response.toString();
+                        context.processCreateUserResponse(response);
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        fragment.handleUnexpectedError(error);
-                    }
-                });
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // handle error
+            }
+        });
 
-        // Add the request to the RequestQueue.
-        RequestQueueFactory.getRequestQueue(context).add(request);
+        req.setRetryPolicy(new DefaultRetryPolicy(10000,
+                5,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // add the request object to the queue to be executed
+        Request response = RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
     @Override
@@ -114,5 +161,10 @@ public class RestServiceImpl implements RestService {
 
         // Add the request to the RequestQueue.
         RequestQueueFactory.getRequestQueue(context).add(request);
+    }
+
+    @Override
+    public void getUsers(String userName, String token, final ContactFragment fragment, final FragmentActivity context){
+
     }
 }

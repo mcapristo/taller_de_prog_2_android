@@ -17,7 +17,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".activity.DashboardActivity"
@@ -42,7 +41,10 @@
         <activity
             android:name=".activity.UserDetail"
             android:label="@string/title_activity_user_detail" >
-
+        </activity>
+        <activity
+            android:name=".activity.CreateUserResponseActivity"
+            android:label="@string/title_activity_create_user_response" >
         </activity>
     </application>
 

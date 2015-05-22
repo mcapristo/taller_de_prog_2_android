@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONObject;
+
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.constants.ResponseConstants;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
@@ -131,6 +133,7 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
+    /*
     public void processLoginResponse(UserDTO userDTO) {
         if(ResponseConstants.OK_RESPONSE.equals(userDTO.getResult())) {
             Intent intent = new Intent(this, HomeActivity.class);
@@ -142,6 +145,15 @@ public class LoginActivity extends ActionBarActivity {
             showCredentialsError();
         }
 
+    }
+    */
+
+    public void processLoginResponse(JSONObject response) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        // intent.putExtra(RestService.LOGIN_RESPONSE_NAME, userDTO.getName());
+        // intent.putExtra(RestService.LOGIN_TOKEN, userDTO.getToken());
+        startActivity(intent);
+        finish();
     }
 
     public void handleError(UserDTO userDTO) {
