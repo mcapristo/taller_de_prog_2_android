@@ -19,6 +19,7 @@ import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 public class CreateUserActivity extends ActionBarActivity {
+    public final static String USER_NAME = "grupo3.tallerprogramacion2.mensajero.activity.CreateUserActivity.USER_NAME";
     private final RestService restService = RestServiceFactory.getRestService();
 
     // UI references.
@@ -78,7 +79,7 @@ public class CreateUserActivity extends ActionBarActivity {
         restService.createUser(userName, fullName, password, this);
     }
 
-    public void processCreateUserRequest(UserDTO userDTO) {
+   /* public void processCreateUserRequest(UserDTO userDTO) {
         if(ResponseConstants.OK_RESPONSE.equals(userDTO.getResult())) {
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra(RestService.LOGIN_RESPONSE_NAME, userDTO.getName());
@@ -88,13 +89,13 @@ public class CreateUserActivity extends ActionBarActivity {
         } else {
             // showCredentialsError();
         }
-    }
+    }*/
 
-    public void processCreateUserResponse(JSONObject response) {
+    public void processCreateUserResponse(UserDTO user) {
         // String username = response.getJSONObject("Data").getString("username");
         // String name = (String) response.getString("Name");
         Intent intent = new Intent(this, CreateUserResponseActivity.class);
-        intent.putExtra("CreateUserResponse_f_UserName", response.toString());
+        intent.putExtra(USER_NAME, user.getName());
         startActivity(intent);
         finish();
     }

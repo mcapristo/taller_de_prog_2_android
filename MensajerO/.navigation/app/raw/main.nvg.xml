@@ -56,16 +56,16 @@
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "grupo3.tallerprogramacion2.mensajero.activity.CreateUserResponseActivity"/>
       <point      
-        x = "1376"      
-        y = "568"/>
+        x = "2308"      
+        y = "1536"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.MenuState"      
         className = "grupo3.tallerprogramacion2.mensajero.activity.CreateUserResponseActivity"/>
       <point      
-        x = "2644"      
-        y = "568"/>
+        x = "3576"      
+        y = "1536"/>
     </statePointEntry>
     <statePointEntry>
       <state      

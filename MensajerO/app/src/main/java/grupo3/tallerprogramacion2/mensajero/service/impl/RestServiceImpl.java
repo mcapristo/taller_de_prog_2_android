@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +30,7 @@ import grupo3.tallerprogramacion2.mensajero.activity.LoginActivity;
 import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
 import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
+import grupo3.tallerprogramacion2.mensajero.dto.UserDTOContainer;
 import grupo3.tallerprogramacion2.mensajero.network.GsonRequest;
 import grupo3.tallerprogramacion2.mensajero.factory.RequestQueueFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
@@ -127,15 +129,21 @@ public class RestServiceImpl implements RestService {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        String result = response.toString();
-                        context.processCreateUserResponse(response);
+                        UserDTOContainer userContainer = new Gson().fromJson(response.toString(), UserDTOContainer.class);
+                        if("OK".equals(userContainer.getResult())) {
+                            context.processCreateUserResponse(userContainer.getData());
+                        } else {
+                            // Do something with userContainer.getCode() to display proper error
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                    int pepe;
                 // handle error
             }
-        });
+        }
+        );
 
         req.setRetryPolicy(new DefaultRetryPolicy(10000,
                 5,
