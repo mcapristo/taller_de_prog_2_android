@@ -38,34 +38,50 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "grupo3.tallerprogramacion2.mensajero.activity.DashboardActivity"/>
+        className = "grupo3.tallerprogramacion2.mensajero.activity.HomeActivity"/>
       <point      
         x = "500"      
-        y = "1480"/>
+        y = "4240"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.MenuState"      
-        className = "grupo3.tallerprogramacion2.mensajero.activity.DashboardActivity"/>
+        className = "grupo3.tallerprogramacion2.mensajero.activity.HomeActivity"/>
       <point      
         x = "1768"      
-        y = "1480"/>
+        y = "4240"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "grupo3.tallerprogramacion2.mensajero.activity.HomeActivity"/>
+        className = "grupo3.tallerprogramacion2.mensajero.activity.CreateUserResponseActivity"/>
       <point      
-        x = "500"      
-        y = "4240"/>
+        x = "1376"      
+        y = "568"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.MenuState"      
-        className = "grupo3.tallerprogramacion2.mensajero.activity.HomeActivity"/>
+        className = "grupo3.tallerprogramacion2.mensajero.activity.CreateUserResponseActivity"/>
+      <point      
+        x = "2644"      
+        y = "568"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "grupo3.tallerprogramacion2.mensajero.activity.DashboardActivity"/>
+      <point      
+        x = "500"      
+        y = "1480"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.MenuState"      
+        className = "grupo3.tallerprogramacion2.mensajero.activity.DashboardActivity"/>
       <point      
         x = "1768"      
-        y = "4240"/>
+        y = "1480"/>
     </statePointEntry>
     <statePointEntry>
       <state      
@@ -88,16 +104,16 @@
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "grupo3.tallerprogramacion2.mensajero.activity.ContactFragment"/>
       <point      
-        x = "500"      
-        y = "5620"/>
+        x = "1480"      
+        y = "5608"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "grupo3.tallerprogramacion2.mensajero.activity.ChatFragment"/>
       <point      
-        x = "550"      
-        y = "5670"/>
+        x = "380"      
+        y = "5652"/>
     </statePointEntry>
   </locations>
 </navigationModel>

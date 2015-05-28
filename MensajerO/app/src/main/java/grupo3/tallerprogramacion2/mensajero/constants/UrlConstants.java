@@ -2,7 +2,7 @@ package grupo3.tallerprogramacion2.mensajero.constants;
 
 public class UrlConstants {
 
-    public static final String BASE_URL = "http://192.168.1.6";
+    public static final String BASE_URL = "http://192.168.1.116";
     // public static final String LOCALHOST_URL = "http://10.0.2.2";
     public static final String LOCALHOST_PORT = ":8000/";
     public static final String API = "api/";

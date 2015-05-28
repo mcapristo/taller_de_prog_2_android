@@ -2,6 +2,8 @@ package grupo3.tallerprogramacion2.mensajero.service;
 
 import android.support.v4.app.FragmentActivity;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public interface RestService {
     public final static String LOGIN_RESPONSE_NAME = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_RESPONSE_NAME";
     public final static String LOGIN_TOKEN = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_TOKEN";
 
-    public void login(String username, String password, final LoginActivity context);
+    public void login(String username, String password, final LoginActivity context) throws JSONException;
 
     public void createUser(String userName, String fullName, String password, final CreateUserActivity context);
 

@@ -71,7 +71,7 @@ public class RestServiceImpl implements RestService {
     */
 
     @Override
-    public void login(final String username, final String password, final LoginActivity context) {
+    public void login(final String username, final String password, final LoginActivity context) throws JSONException{
         String url = UrlConstants.getLoginServiceUrl();
 
         JsonObjectRequest req = new JsonObjectRequest(url, null,
@@ -79,12 +79,17 @@ public class RestServiceImpl implements RestService {
                     @Override
                     public void onResponse(JSONObject response) {
                         // handle response
-                        context.processLoginResponse(response);
+                        try {
+                            String username = response.getString("result");
+                            context.processLoginResponse(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // handle error
+                context.handleUnexpectedError(error);
             }
         }) {
 

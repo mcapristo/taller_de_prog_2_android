@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import grupo3.tallerprogramacion2.mensajero.R;
@@ -80,12 +81,12 @@ public class LoginActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void loginClick(View view) {
+    public void loginClick(View view) throws JSONException {
         attemptLogin();
     }
 
 
-    public void attemptLogin() {
+    public void attemptLogin() throws JSONException {
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -148,12 +149,17 @@ public class LoginActivity extends ActionBarActivity {
     }
     */
 
-    public void processLoginResponse(JSONObject response) {
-        Intent intent = new Intent(this, HomeActivity.class);
-        // intent.putExtra(RestService.LOGIN_RESPONSE_NAME, userDTO.getName());
-        // intent.putExtra(RestService.LOGIN_TOKEN, userDTO.getToken());
-        startActivity(intent);
-        finish();
+    public void processLoginResponse(JSONObject response) throws JSONException {
+        if(("OK").equals(response.getString("result"))){
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra(RestService.LOGIN_RESPONSE_NAME, response.getJSONObject("data").getString("username"));
+            intent.putExtra(RestService.LOGIN_TOKEN, response.getJSONObject("data").getString("token"));
+            startActivity(intent);
+            finish();
+        }
+
+        mPasswordView.setError(getString(R.string.error_incorrect_password));
+        showProgress(false);
     }
 
     public void handleError(UserDTO userDTO) {
@@ -165,7 +171,7 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void handleUnexpectedError(Exception error) {
-        // TODO define what to show on unexpected errors.
+        showProgress(false);
     }
 
     private void showCredentialsError() {
