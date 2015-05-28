@@ -156,10 +156,10 @@ public class LoginActivity extends ActionBarActivity {
             intent.putExtra(RestService.LOGIN_TOKEN, response.getJSONObject("data").getString("token"));
             startActivity(intent);
             finish();
+        }else{
+            mPasswordView.setError(getString(R.string.error_incorrect_password));
+            showProgress(false);
         }
-
-        mPasswordView.setError(getString(R.string.error_incorrect_password));
-        showProgress(false);
     }
 
     public void handleError(UserDTO userDTO) {

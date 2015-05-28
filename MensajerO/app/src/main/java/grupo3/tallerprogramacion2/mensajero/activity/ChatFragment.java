@@ -30,9 +30,9 @@ public class ChatFragment extends Fragment {
     protected ArrayList<String> contactsWithConvs = new ArrayList<String>();
     private final RestService restService = RestServiceFactory.getRestService();
 
-    public static final ContactFragment newInstance(String message)
+    public static final ChatFragment newInstance(String message)
     {
-        ContactFragment f = new ContactFragment();
+        ChatFragment f = new ChatFragment();
         Bundle bdl = new Bundle(1);
         bdl.putString(EXTRA_MESSAGE, message);
         f.setArguments(bdl);

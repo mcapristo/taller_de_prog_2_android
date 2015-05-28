@@ -26,7 +26,7 @@ class MyPageAdapter extends FragmentPagerAdapter {
             case 1:
                 return contactFragment.newInstance("contactos");
         }
-        return chatFragment.newInstance("chats");
+        return null;
     }
 
     @Override

@@ -8,11 +8,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -143,14 +146,10 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
-    public void getConversations(String userName, String token, final ChatFragment fragment, final FragmentActivity context) {
+    public void getConversations(final String username, final String token, final ChatFragment fragment, final FragmentActivity context) {
         String url = UrlConstants.getConversationServiceUrl();
 
-        Map<String, String> headers = new HashMap<String, String>();
-        headers.put("username", userName);
-        headers.put("token", token);
-
-        GsonRequest request = new GsonRequest(url, ConversationDTO[].class, headers,
+        /*GsonRequest request = new GsonRequest(url, ConversationDTO[].class, headers,
                 new Response.Listener<ArrayList<ConversationDTO>>() {
                     @Override
                     public void onResponse(ArrayList<ConversationDTO> conversations) {
@@ -162,14 +161,67 @@ public class RestServiceImpl implements RestService {
                     public void onErrorResponse(VolleyError error) {
                         fragment.handleUnexpectedError(error);
                     }
-                });
+                });*/
+
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+            new Response.Listener<JSONObject> () {
+                @Override
+                public void onResponse(JSONObject response) {
+                    int a = 0;
+
+                    //fragment.PopulateContacts(response);
+            }
+        }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+            }
+        })
+        {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
 
         // Add the request to the RequestQueue.
-        RequestQueueFactory.getRequestQueue(context).add(request);
+        RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
     @Override
-    public void getUsers(String userName, String token, final ContactFragment fragment, final FragmentActivity context){
+    public void getUsers(final String username, final String token, final ContactFragment fragment, final FragmentActivity context){
+        String url = UrlConstants.getUserServiceUrl();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        int a = 0;
+
+                        //fragment.PopulateContacts(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        })
+        {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
 
     }
 }
