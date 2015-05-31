@@ -29,6 +29,8 @@ public class ContactFragment extends Fragment {
     SwipeRefreshLayout swipeLayout;
     private ArrayList<String> contacts = new ArrayList<String>();
     private final RestService restService = RestServiceFactory.getRestService();
+    private String myUsername;
+    private String myToken;
 
     public static final ContactFragment newInstance(String message)
     {
@@ -56,6 +58,9 @@ public class ContactFragment extends Fragment {
         });
         swipeLayout.setRefreshing(true);
 
+        Bundle args = getActivity().getIntent().getExtras();
+        this.myUsername= args.getString(RestService.LOGIN_RESPONSE_NAME);
+        this.myToken= args.getString(RestService.LOGIN_TOKEN);
 
         return rootView;
     }
@@ -72,18 +77,16 @@ public class ContactFragment extends Fragment {
     }
 
     private void getContactsFromDB(){
-        Bundle args = getActivity().getIntent().getExtras();
-        String myUserName= args.getString(RestService.LOGIN_RESPONSE_NAME);
-        String myToken= args.getString(RestService.LOGIN_TOKEN);
-
-        restService.getUsers(myUserName, myToken, this, getActivity());
+        restService.getUsers(this.myUsername, this.myToken, this, getActivity());
     }
 
     public void PopulateContacts(ArrayList<UserDTO> allContacts) {
         ListView lst = (ListView) getView().findViewById(R.id.listView);
 
         for (int i = 0; i < allContacts.size(); i++) {
-            this.contacts.add(allContacts.get(i).getUsername());
+            if(!allContacts.get(i).getUsername().equals(myUsername)){
+                this.contacts.add(allContacts.get(i).getUsername());
+            }
         }
         LazyAdapter adapter = new LazyAdapter(getActivity(), this.contacts);
 
@@ -96,8 +99,7 @@ public class ContactFragment extends Fragment {
                                     int position, long id) {
                 if (contacts != null) {
                     if (position <= contacts.size()) {
-                        //TODO: mandar a ConversationActivity.class en vez de LoginActivity.class
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        Intent intent = new Intent(getActivity(), ChatActivity.class);
                         String contact = contacts.get(position);
                         intent.putExtra("contactUsername", contact);
                         startActivity(intent);

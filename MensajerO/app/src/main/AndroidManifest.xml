@@ -46,6 +46,10 @@
             android:name=".activity.CreateUserResponseActivity"
             android:label="@string/title_activity_create_user_response" >
         </activity>
+        <activity
+            android:name=".activity.ChatActivity"
+            android:label="@string/title_activity_chat" >
+        </activity>
     </application>
 
 </manifest>

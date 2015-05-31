@@ -67,6 +67,10 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
             return true;
         }
 
+        if (id == R.id.action_viewProfile) {
+            return true;
+        }
+
         if (id == R.id.action_exit) {
             finish();
             return true;

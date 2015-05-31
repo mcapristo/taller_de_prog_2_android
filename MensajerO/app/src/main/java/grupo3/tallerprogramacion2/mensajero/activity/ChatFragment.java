@@ -25,10 +25,12 @@ import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 public class ChatFragment extends Fragment {
-    public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
+    public static final String EXTRA_MESSAGE = "EXTRA_MEivSSAGE";
     SwipeRefreshLayout swipeLayout;
     protected ArrayList<String> contactsWithConvs = new ArrayList<String>();
     private final RestService restService = RestServiceFactory.getRestService();
+    private String myUsername;
+    private String myToken;
 
     public static final ChatFragment newInstance(String message)
     {
@@ -56,6 +58,10 @@ public class ChatFragment extends Fragment {
         });
         swipeLayout.setRefreshing(true);
 
+        Bundle args = getActivity().getIntent().getExtras();
+        this.myUsername = args.getString(RestService.LOGIN_RESPONSE_NAME);
+        this.myToken= args.getString(RestService.LOGIN_TOKEN);
+
         return rootView;
     }
 
@@ -67,19 +73,13 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         getContactsFromDB();
-        ListView lst = (ListView) getView().findViewById(R.id.listView);
     }
 
     private void getContactsFromDB(){
-        Bundle args = getActivity().getIntent().getExtras();
-        String myUserName= args.getString(RestService.LOGIN_RESPONSE_NAME);
-        String myToken= args.getString(RestService.LOGIN_TOKEN);
-        restService.getConversations(myUserName, myToken, this, getActivity());
+        restService.getConversations(this.myUsername, this.myToken, this, getActivity());
     }
 
     public void PopulateContacts(ArrayList<ConversationDTO> chats){
-        //TODO: get my username
-        String myUsername = "";
         this.contactsWithConvs = getUsersFromConversation(chats, myUsername);
 
         ListView lst = (ListView) getView().findViewById(R.id.listView);
@@ -95,9 +95,10 @@ public class ChatFragment extends Fragment {
                                     int position, long id) {
                 if (contactsWithConvs != null) {
                     if (position <= contactsWithConvs.size()) {
-                        //TODO: mandar a ConversationActivity.class en vez de LoginActivity.class
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        Intent intent = new Intent(getActivity(), ChatActivity.class);
                         String contact = contactsWithConvs.get(position);
+                        intent.putExtra(RestService.LOGIN_RESPONSE_NAME, myUsername);
+                        intent.putExtra(RestService.LOGIN_TOKEN, myToken);
                         intent.putExtra("contactUsername", contact);
                         startActivity(intent);
                     }
@@ -105,7 +106,6 @@ public class ChatFragment extends Fragment {
                     Toast.makeText(getActivity(), "Ups! parece que no hay conexion en este momento!",
                             Toast.LENGTH_LONG).show();
                     refresh();
-
                 }
             }
         });
@@ -116,10 +116,10 @@ public class ChatFragment extends Fragment {
         ArrayList<String> otherUsernames = new ArrayList<String>();
 
         for(int i=0; i < chats.size(); i++){
-            if(chats.get(i).getUsername1() != myUserName){
-                otherUsernames.add(chats.get(i).getUsername1());
-            }else {
+            if(chats.get(i).getUsername1().equals(myUserName)){
                 otherUsernames.add(chats.get(i).getUsername2());
+            }else {
+                otherUsernames.add(chats.get(i).getUsername1());
             }
         }
         return otherUsernames;
