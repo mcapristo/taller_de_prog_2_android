@@ -1,7 +1,7 @@
 package grupo3.tallerprogramacion2.mensajero.service.impl;
 
+import android.content.Context;
 import android.support.v4.app.FragmentActivity;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -137,14 +137,13 @@ public class RestServiceImpl implements RestService {
                         if("OK".equals(userContainer.getResult())) {
                             context.processCreateUserResponse(userContainer.getData());
                         } else {
-                            int a = 0;
-                            // Do something with userContainer.getCode() to display proper error
+                            context.handleUnexpectedError(userContainer.getCode());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                int a = 0;
+                context.handleUnexpectedError(1001);
             }
         }
         );
@@ -170,8 +169,6 @@ public class RestServiceImpl implements RestService {
                     if("OK".equals(conversationContainer.getResult())) {
                         fragment.PopulateContacts(conversationContainer.getData());
                     } else {
-                        int a = 0;
-                        // Do something with userContainer.getCode() to display proper error
                     }
             }
         }, new Response.ErrorListener() {
