@@ -93,6 +93,8 @@ public class ContactFragment extends Fragment {
                     if (position <= contacts.size()) {
                         Intent intent = new Intent(getActivity(), ChatActivity.class);
                         String contact = contacts.get(position);
+                        intent.putExtra(RestService.LOGIN_RESPONSE_NAME, myUsername);
+                        intent.putExtra(RestService.LOGIN_TOKEN, myToken);
                         intent.putExtra("contactUsername", contact);
                         startActivity(intent);
                     }

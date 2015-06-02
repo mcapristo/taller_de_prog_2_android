@@ -231,27 +231,37 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
-    public void sendMessage(String token, ChatMessageDTO message, ChatActivity context) {
-        String url = UrlConstants.getCreateUserServiceUrl();
+    public void sendMessage(final String token, ChatMessageDTO message, ChatActivity context) {
+        String url = UrlConstants.getMessageServiceUrl();
 
+        final String emisor = message.getEmisor();
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("username", message.getEmisor());
-        params.put("token", token);
+        params.put("emisor", message.getEmisor());
+        params.put("receptor", message.getReceptor());
+        params.put("body", message.getMessage());
 
         JsonObjectRequest req = new JsonObjectRequest(url, new JSONObject(params),
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject> () {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        int a = 0;
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // handle error
+                int a = 0;
             }
-        }
-        );
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", emisor);
+                headers.put("token", token);
+                return headers;
+            }
+        };
 
         // add the request object to the queue to be executed
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);

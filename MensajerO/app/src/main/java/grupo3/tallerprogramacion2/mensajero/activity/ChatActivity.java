@@ -67,18 +67,22 @@ public class ChatActivity extends ActionBarActivity {
                 return false;
             }
         });
+
+        //define variables for button listener
+        final String username = this.myUsername;
+        final String receptor = this.recpetorUsername;
+        final String token = this.myToken;
+        final ChatActivity activity = this;
         buttonSend.setOnClickListener(new View.OnClickListener() {
             Bundle args = getIntent().getExtras();
-            String myUsername = args.getString(RestService.LOGIN_RESPONSE_NAME);
-            String receptorUsername = args.getString(RestService.LOGIN_TOKEN);
 
             @Override
             public void onClick(View arg0) {
-                ChatMessageDTO message = new ChatMessageDTO(side, chatText.getText().toString(), this.myUsername, this.receptorUsername);
+                ChatMessageDTO message = new ChatMessageDTO(side, chatText.getText().toString(), username, receptor);
                 chatArrayAdapter.add(message);
                 chatText.setText("");
                 side = !side;
-                sendMessageToServer(message);
+                restService.sendMessage(token, message, activity);
             }
         });
 
@@ -93,10 +97,5 @@ public class ChatActivity extends ActionBarActivity {
                 listView.setSelection(chatArrayAdapter.getCount() - 1);
             }
         });
-    }
-
-    private void sendMessageToServer(ChatMessageDTO message){
-        //TODO: send to server
-        restService.sendMessage(myToken, message, this);
     }
 }
