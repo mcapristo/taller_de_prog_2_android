@@ -45,4 +45,9 @@ class MyPageAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 2;
     }
+
+    public void refreshFragments(String username, String token){
+        chatFragment.refresh(username, token);
+        contactFragment.refresh(username, token);
+    }
 }

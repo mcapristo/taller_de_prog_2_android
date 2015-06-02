@@ -2,6 +2,7 @@
     <string name="app_name">MensajerO</string>
 
     <string name="action_settings">Settings</string>
+    <string name="action_refresh">Actualizar</string>
     <string name="action_exit">Salir</string>
     <string name="action_viewProfile">Ver Perfil</string>
     <string name="title_activity_dashboard">Dashboard</string>

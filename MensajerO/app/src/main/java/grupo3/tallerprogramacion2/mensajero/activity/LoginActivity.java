@@ -175,7 +175,7 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     private void showCredentialsError() {
-        mEmailView.setError(getString(R.string.error_invalid_email));
+        mEmailView.setError(getString(R.string.error_invalid_username));
         mPasswordView.setError(getString(R.string.error_field_required));
     }
 

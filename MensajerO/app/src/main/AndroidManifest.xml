@@ -19,10 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DashboardActivity"
-            android:label="@string/title_activity_dashboard" >
-        </activity>
-        <activity
             android:name=".activity.CreateUserActivity"
             android:label="Create User" >
         </activity>

@@ -25,7 +25,7 @@ import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 public class ChatFragment extends Fragment {
-    public static final String EXTRA_MESSAGE = "EXTRA_MEivSSAGE";
+    private static final String TAG = "ChatFragment";
     SwipeRefreshLayout swipeLayout;
     protected ArrayList<String> contactsWithConvs = new ArrayList<String>();
     private final RestService restService = RestServiceFactory.getRestService();
@@ -36,7 +36,6 @@ public class ChatFragment extends Fragment {
     {
         ChatFragment f = new ChatFragment();
         Bundle bdl = new Bundle(1);
-        bdl.putString(EXTRA_MESSAGE, message);
         f.setArguments(bdl);
         return f;
     }
@@ -45,14 +44,12 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_contact_fragment, container, false);
-        //EventsInfoRetrivial retrieveEventsThread = new EventsInfoRetrivial(this);
-        //retrieveEventsThread.execute(serverUrl);
 
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.activity_main_swipe_refresh_layout);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refresh();
+                getContactsFromDB();
             }
 
         });
@@ -63,11 +60,6 @@ public class ChatFragment extends Fragment {
         this.myToken= args.getString(RestService.LOGIN_TOKEN);
 
         return rootView;
-    }
-
-    public void refresh() {
-        //EventsInfoRetrivial retrieveEventsThread = new EventsInfoRetrivial(this);
-        //retrieveEventsThread.execute(serverUrl);
     }
 
     @Override
@@ -103,9 +95,8 @@ public class ChatFragment extends Fragment {
                         startActivity(intent);
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Ups! parece que no hay conexion en este momento!",
+                    Toast.makeText(getActivity(), "Ups! no connection!",
                             Toast.LENGTH_LONG).show();
-                    refresh();
                 }
             }
         });
@@ -127,5 +118,11 @@ public class ChatFragment extends Fragment {
 
     public void handleUnexpectedError(Exception error) {
         // TODO define what to show on unexpected errors.
+    }
+
+    public void refresh(String username, String token){
+        this.myToken = token;
+        this.myUsername = username;
+        getContactsFromDB();
     }
 }

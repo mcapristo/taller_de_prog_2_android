@@ -3,6 +3,7 @@ package grupo3.tallerprogramacion2.mensajero.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,13 +12,15 @@ import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
 
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
-public class ChatActivity extends Activity {
+public class ChatActivity extends ActionBarActivity {
     private ChatArrayAdapter chatArrayAdapter;
     private ListView listView;
     private EditText chatText;
@@ -39,6 +42,12 @@ public class ChatActivity extends Activity {
         this.myUsername = args.getString(RestService.LOGIN_RESPONSE_NAME);
         this.myToken= args.getString(RestService.LOGIN_TOKEN);
         this.recpetorUsername = args.getString("contactUsername");
+
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setIcon(R.mipmap.mensajer0_launcher);
+        actionBar.setTitle(args.getString("contactUsername"));
 
         setTitle(this.recpetorUsername);
 

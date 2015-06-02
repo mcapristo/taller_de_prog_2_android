@@ -25,7 +25,7 @@ import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 public class ContactFragment extends Fragment {
-    public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
+    private static final String TAG = "ChatFragment";
     SwipeRefreshLayout swipeLayout;
     private ArrayList<String> contacts = new ArrayList<String>();
     private final RestService restService = RestServiceFactory.getRestService();
@@ -36,7 +36,6 @@ public class ContactFragment extends Fragment {
     {
         ContactFragment f = new ContactFragment();
         Bundle bdl = new Bundle(1);
-        bdl.putString(EXTRA_MESSAGE, message);
         f.setArguments(bdl);
         return f;
     }
@@ -45,14 +44,12 @@ public class ContactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_contact_fragment, container, false);
-        //EventsInfoRetrivial retrieveEventsThread = new EventsInfoRetrivial(this);
-        //retrieveEventsThread.execute(serverUrl);
 
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.activity_main_swipe_refresh_layout);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refresh();
+                getContactsFromDB();
             }
 
         });
@@ -65,15 +62,9 @@ public class ContactFragment extends Fragment {
         return rootView;
     }
 
-    public void refresh() {
-        //EventsInfoRetrivial retrieveEventsThread = new EventsInfoRetrivial(this);
-        //retrieveEventsThread.execute(serverUrl);
-    }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         getContactsFromDB();
-        ListView lst = (ListView) getView().findViewById(R.id.listView);
     }
 
     private void getContactsFromDB(){
@@ -83,6 +74,7 @@ public class ContactFragment extends Fragment {
     public void PopulateContacts(ArrayList<UserDTO> allContacts) {
         ListView lst = (ListView) getView().findViewById(R.id.listView);
 
+        this.contacts.clear();
         for (int i = 0; i < allContacts.size(); i++) {
             if(!allContacts.get(i).getUsername().equals(myUsername)){
                 this.contacts.add(allContacts.get(i).getUsername());
@@ -105,10 +97,8 @@ public class ContactFragment extends Fragment {
                         startActivity(intent);
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Ups! parece que no hay conexion en este momento!",
+                    Toast.makeText(getActivity(), "Ups! no connection!",
                             Toast.LENGTH_LONG).show();
-                    refresh();
-
                 }
             }
         });
@@ -116,5 +106,11 @@ public class ContactFragment extends Fragment {
 
     public void handleUnexpectedError(Exception error) {
         // TODO define what to show on unexpected errors.
+    }
+
+    public void refresh(String username, String token){
+        this.myToken = token;
+        this.myUsername = username;
+        getContactsFromDB();
     }
 }
