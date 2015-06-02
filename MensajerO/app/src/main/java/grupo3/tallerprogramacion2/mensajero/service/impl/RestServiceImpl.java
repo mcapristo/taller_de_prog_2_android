@@ -98,7 +98,7 @@ public class RestServiceImpl implements RestService {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                context.handleUnexpectedError(error);
+                context.handleUnexpectedError(1001);
             }
         }) {
 

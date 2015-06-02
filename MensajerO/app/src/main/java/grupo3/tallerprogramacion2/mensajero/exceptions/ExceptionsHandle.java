@@ -72,7 +72,7 @@ public class ExceptionsHandle {
                 break;
 
             case 2:
-                this.errorDialog.setMessage("");
+                this.errorDialog.setMessage("El password que ingresó es incorrecto =(");
                 break;
 
             case 3:

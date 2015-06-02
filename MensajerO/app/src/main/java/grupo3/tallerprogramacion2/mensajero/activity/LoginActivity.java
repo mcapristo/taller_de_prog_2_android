@@ -3,6 +3,7 @@ package grupo3.tallerprogramacion2.mensajero.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.constants.ResponseConstants;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
+import grupo3.tallerprogramacion2.mensajero.exceptions.ExceptionsHandle;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
@@ -39,6 +41,8 @@ public class LoginActivity extends ActionBarActivity {
     private View mEmailLoginFormView;
     private View mSignOutButtons;
     private View mLoginFormView;
+
+    private AlertDialog errorDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +161,8 @@ public class LoginActivity extends ActionBarActivity {
             startActivity(intent);
             finish();
         }else{
-            mPasswordView.setError(getString(R.string.error_incorrect_password));
+            // mPasswordView.setError(getString(R.string.error_incorrect_password));
+            this.handleUnexpectedError(2);
             showProgress(false);
         }
     }
@@ -168,6 +173,11 @@ public class LoginActivity extends ActionBarActivity {
             case 2: showCredentialsError();
             default: handleUnexpectedError(null);
         }
+    }
+
+    public void handleUnexpectedError(int errorCode) {
+        this.errorDialog = (new ExceptionsHandle(this, errorCode)).loadError();
+        this.errorDialog.show();
     }
 
     public void handleUnexpectedError(Exception error) {
