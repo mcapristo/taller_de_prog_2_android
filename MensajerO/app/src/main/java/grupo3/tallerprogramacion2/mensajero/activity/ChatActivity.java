@@ -15,8 +15,15 @@ import android.widget.ListView;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
+import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTO;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
@@ -30,8 +37,9 @@ public class ChatActivity extends ActionBarActivity {
     private String myToken;
     private String recpetorUsername;
 
-    Intent intent;
     private boolean side = false;
+    Timer timer;
+    MyTimerTask myTimerTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,13 +86,15 @@ public class ChatActivity extends ActionBarActivity {
 
             @Override
             public void onClick(View arg0) {
-                ChatMessageDTO message = new ChatMessageDTO(side, chatText.getText().toString(), username, receptor);
+                String id = String.format("%s%s%d", username, receptor, chatArrayAdapter.getCount());
+                ChatMessageDTO message = new ChatMessageDTO(id, false, chatText.getText().toString(), username, receptor);
                 chatArrayAdapter.add(message);
                 chatText.setText("");
-                side = !side;
                 restService.sendMessage(token, message, activity);
             }
         });
+
+        getMessages();
 
         listView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         listView.setAdapter(chatArrayAdapter);
@@ -97,5 +107,50 @@ public class ChatActivity extends ActionBarActivity {
                 listView.setSelection(chatArrayAdapter.getCount() - 1);
             }
         });
+
+        if(timer != null){
+            timer.cancel();
+        }
+
+        timer = new Timer();
+        myTimerTask = new MyTimerTask();
+
+        timer.schedule(myTimerTask, 1000, 2000);
+    }
+
+    public void getMessages(){
+        restService.getMessages(this.myUsername, this.myToken, this.recpetorUsername, this);
+    }
+
+    public void LoadMessages(ArrayList<ChatMessageDTO> messages){
+        for(int i=0; i < messages.size(); i++){
+            ChatMessageDTO message = messages.get(i);
+            boolean esViejo = false;
+            for(int j=0; j < chatArrayAdapter.getCount(); j++){
+                if(chatArrayAdapter.getItem(j).getId().equals(message.getId())){
+                    esViejo = true;
+                }
+            }
+
+            if(!esViejo){
+                message.setLeft(message.getReceptor().equals(this.myUsername));
+                chatArrayAdapter.add(message);
+            }
+        }
+    }
+
+    class MyTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+
+            runOnUiThread(new Runnable(){
+
+                @Override
+                public void run() {
+                    getMessages();
+                }
+            });
+        }
     }
 }

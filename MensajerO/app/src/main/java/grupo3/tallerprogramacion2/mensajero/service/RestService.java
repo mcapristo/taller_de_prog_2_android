@@ -31,4 +31,6 @@ public interface RestService {
     public void getConversations(String userName, String token, final ChatFragment fragment, final FragmentActivity context);
 
     public void sendMessage(String token, ChatMessageDTO message, final ChatActivity context);
+
+    public void getMessages(String userName, String token, String receptor, final ChatActivity context);
 }

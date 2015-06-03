@@ -61,7 +61,6 @@ public class LoginActivity extends ActionBarActivity {
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -89,7 +88,6 @@ public class LoginActivity extends ActionBarActivity {
         attemptLogin();
     }
 
-
     public void attemptLogin() throws JSONException {
         // Reset errors.
         mEmailView.setError(null);
@@ -101,7 +99,6 @@ public class LoginActivity extends ActionBarActivity {
 
         boolean cancel = false;
         View focusView = null;
-
 
         // Check for a required password
         if (TextUtils.isEmpty(password)) {
@@ -120,11 +117,7 @@ public class LoginActivity extends ActionBarActivity {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } /*else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }*/
+        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -138,21 +131,6 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
-    /*
-    public void processLoginResponse(UserDTO userDTO) {
-        if(ResponseConstants.OK_RESPONSE.equals(userDTO.getResult())) {
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra(RestService.LOGIN_RESPONSE_NAME, userDTO.getName());
-            intent.putExtra(RestService.LOGIN_TOKEN, userDTO.getToken());
-            startActivity(intent);
-            finish();
-        } else {
-            showCredentialsError();
-        }
-
-    }
-    */
-
     public void processLoginResponse(JSONObject response) throws JSONException {
         if(("OK").equals(response.getString("result"))){
             Intent intent = new Intent(this, HomeActivity.class);
@@ -161,7 +139,6 @@ public class LoginActivity extends ActionBarActivity {
             startActivity(intent);
             finish();
         }else{
-            // mPasswordView.setError(getString(R.string.error_incorrect_password));
             this.handleUnexpectedError(2);
             showProgress(false);
         }
@@ -187,12 +164,6 @@ public class LoginActivity extends ActionBarActivity {
     private void showCredentialsError() {
         mEmailView.setError(getString(R.string.error_invalid_username));
         mPasswordView.setError(getString(R.string.error_field_required));
-    }
-
-
-    private boolean isEmailValid(String email) {
-        //TODO: Add proper validations.
-        return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {

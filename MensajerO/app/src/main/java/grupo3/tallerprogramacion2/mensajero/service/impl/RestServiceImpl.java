@@ -1,6 +1,5 @@
 package grupo3.tallerprogramacion2.mensajero.service.impl;
 
-import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -8,34 +7,26 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import grupo3.tallerprogramacion2.mensajero.activity.ChatActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.ChatFragment;
 import grupo3.tallerprogramacion2.mensajero.activity.ContactFragment;
 import grupo3.tallerprogramacion2.mensajero.activity.CreateUserActivity;
-import grupo3.tallerprogramacion2.mensajero.activity.HomeActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.LoginActivity;
 import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
+import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTOContainer;
 import grupo3.tallerprogramacion2.mensajero.dto.ContactsDTOContainer;
-import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTOContainer;
-import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTOContainer;
-import grupo3.tallerprogramacion2.mensajero.network.GsonRequest;
 import grupo3.tallerprogramacion2.mensajero.factory.RequestQueueFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
@@ -239,7 +230,7 @@ public class RestServiceImpl implements RestService {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("emisor", message.getEmisor());
         params.put("receptor", message.getReceptor());
-        params.put("body", message.getMessage());
+        params.put("body", message.getBody());
 
         JsonObjectRequest req = new JsonObjectRequest(url, new JSONObject(params),
                 new Response.Listener<JSONObject> () {
@@ -265,5 +256,41 @@ public class RestServiceImpl implements RestService {
 
         // add the request object to the queue to be executed
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void getMessages(final String username, final String token, final String receptor, final ChatActivity context) {
+        String url = UrlConstants.getMessageServiceUrl() + "?username=" + receptor;
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        ChatMessageDTOContainer messagesContainer =
+                                new Gson().fromJson(response.toString(), ChatMessageDTOContainer.class);
+                        if("OK".equals(messagesContainer.getResult())) {
+                            context.LoadMessages(messagesContainer.getData());
+                        } else {
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+
+        // Add the request to the RequestQueue.
+        RequestQueueFactory.getRequestQueue(context).add(req);
     }
 }
