@@ -4,6 +4,8 @@
     tools:context="grupo3.tallerprogramacion2.mensajero.activity.HomeActivity">
     <item android:id="@+id/action_viewProfile" android:title="@string/action_viewProfile"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_editProfile" android:title="@string/action_editProfile"
+        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_exit" android:title="@string/action_exit"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

@@ -1,5 +1,6 @@
 package grupo3.tallerprogramacion2.mensajero.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -57,6 +58,14 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
         int id = item.getItemId();
 
         if (id == R.id.action_viewProfile) {
+            Intent i = new Intent(this, UserDetailActivity.class);
+            startActivity(i);
+            return true;
+        }
+
+        if (id == R.id.action_editProfile) {
+            Intent i = new Intent(this, EditUserActivity.class);
+            startActivity(i);
             return true;
         }
 

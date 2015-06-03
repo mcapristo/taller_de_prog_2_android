@@ -4,42 +4,35 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CheckBox;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 
-
-public class UserDetail extends ActionBarActivity {
+public class EditUserActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_detail);
+        setContentView(R.layout.activity_edit_user);
 
         UserDTO user = new UserDTO();
-        user.setName("Martin Palermo");
-        user.setUsername("martin@palermo.com");
-        user.setOnline(true);
+        user.setName("mateo bosco");
+        user.setPassword("contrasenia");
 
-        this.completeFields(user);
     }
 
-    public void completeFields(UserDTO user){
-        TextView nameTextView = (TextView)findViewById(R.id.nameTextView);
-        TextView usernameTextView = (TextView)findViewById(R.id.usernameTextView);
-        CheckBox onlineCheckBox = (CheckBox)findViewById(R.id.onlineCheckBox);
-
-        nameTextView.setText(user.getName());
-        usernameTextView.setText(user.getUsername());
-        onlineCheckBox.setChecked(user.isOnline());
+    public void completeField(UserDTO user){
+        EditText fullnameEditText = (EditText)findViewById(R.id.fullnameEditText);
+        EditText passwordEditText = (EditText)findViewById(R.id.passwordEditText);
+        fullnameEditText.setText(user.getName());
+        passwordEditText.setText(user.getPassword());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_user_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_user, menu);
         return true;
     }
 
