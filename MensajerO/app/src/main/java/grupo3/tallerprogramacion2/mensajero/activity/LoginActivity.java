@@ -3,6 +3,8 @@ package grupo3.tallerprogramacion2.mensajero.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,7 +26,7 @@ import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends Activity {
 
     public final static String USER_DATA = "grupo3.tallerprogramacion2.mensajero.activity.LoginActivity.USER_DATA";
 

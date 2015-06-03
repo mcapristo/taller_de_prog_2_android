@@ -1,5 +1,6 @@
 package grupo3.tallerprogramacion2.mensajero.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
-public class CreateUserResponseActivity extends ActionBarActivity {
+public class CreateUserResponseActivity extends Activity {
 
     public final static String USER_NAME = "grupo3.tallerprogramacion2.mensajero.activity.CreateUserActivity.USER_NAME";
 
