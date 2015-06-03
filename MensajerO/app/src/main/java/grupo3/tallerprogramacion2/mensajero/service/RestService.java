@@ -12,6 +12,7 @@ import grupo3.tallerprogramacion2.mensajero.activity.ChatActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.ChatFragment;
 import grupo3.tallerprogramacion2.mensajero.activity.ContactFragment;
 import grupo3.tallerprogramacion2.mensajero.activity.CreateUserActivity;
+import grupo3.tallerprogramacion2.mensajero.activity.EditUserActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.HomeActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.LoginActivity;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
@@ -33,4 +34,6 @@ public interface RestService {
     public void sendMessage(String token, ChatMessageDTO message, final ChatActivity context);
 
     public void getMessages(String userName, String token, String receptor, final ChatActivity context);
+
+    public void updateUser(final String username, final String token, UserDTO modifiedUser, final EditUserActivity context);
 }

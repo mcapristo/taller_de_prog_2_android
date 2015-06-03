@@ -15,6 +15,8 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
 
     MyPageAdapter pageAdapter;
     ViewPager mViewPager;
+    private String username;
+    private String token;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,10 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
         pageAdapter = new MyPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager)findViewById(R.id.viewpager);
         mViewPager.setAdapter(pageAdapter);
+
+        Bundle args = getIntent().getExtras();
+        this.username = args.getString(RestService.LOGIN_RESPONSE_NAME);
+        this.token = args.getString(RestService.LOGIN_TOKEN);
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -59,12 +65,16 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
 
         if (id == R.id.action_viewProfile) {
             Intent i = new Intent(this, UserDetailActivity.class);
+            i.putExtra(RestService.LOGIN_RESPONSE_NAME, username);
+            i.putExtra(RestService.LOGIN_TOKEN, token);
             startActivity(i);
             return true;
         }
 
         if (id == R.id.action_editProfile) {
             Intent i = new Intent(this, EditUserActivity.class);
+            i.putExtra(RestService.LOGIN_RESPONSE_NAME, username);
+            i.putExtra(RestService.LOGIN_TOKEN, token);
             startActivity(i);
             return true;
         }
