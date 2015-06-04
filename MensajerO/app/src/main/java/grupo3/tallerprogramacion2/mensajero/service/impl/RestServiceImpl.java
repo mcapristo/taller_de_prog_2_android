@@ -178,7 +178,6 @@ public class RestServiceImpl implements RestService {
             }
         };
 
-
         // Add the request to the RequestQueue.
         RequestQueueFactory.getRequestQueue(context).add(req);
     }
@@ -271,6 +270,7 @@ public class RestServiceImpl implements RestService {
                         if("OK".equals(messagesContainer.getResult())) {
                             context.LoadMessages(messagesContainer.getData());
                         } else {
+                            int a = 0;
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -288,7 +288,6 @@ public class RestServiceImpl implements RestService {
                 return headers;
             }
         };
-
 
         // Add the request to the RequestQueue.
         RequestQueueFactory.getRequestQueue(context).add(req);

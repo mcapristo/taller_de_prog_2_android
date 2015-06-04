@@ -106,11 +106,13 @@ public class ChatFragment extends Fragment {
     private ArrayList<String> getUsersFromConversation(ArrayList<ConversationDTO> chats, String myUserName){
         ArrayList<String> otherUsernames = new ArrayList<String>();
 
-        for(int i=0; i < chats.size(); i++){
-            if(chats.get(i).getUsername1().equals(myUserName)){
-                otherUsernames.add(chats.get(i).getUsername2());
-            }else {
-                otherUsernames.add(chats.get(i).getUsername1());
+        if(chats != null){
+            for(int i=0; i < chats.size(); i++){
+                if(chats.get(i).getUsername1().equals(myUserName)){
+                    otherUsernames.add(chats.get(i).getUsername2());
+                }else {
+                    otherUsernames.add(chats.get(i).getUsername1());
+                }
             }
         }
         return otherUsernames;

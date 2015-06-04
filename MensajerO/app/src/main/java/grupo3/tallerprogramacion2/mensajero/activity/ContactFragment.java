@@ -75,9 +75,11 @@ public class ContactFragment extends Fragment {
         ListView lst = (ListView) getView().findViewById(R.id.listView);
 
         this.contacts.clear();
-        for (int i = 0; i < allContacts.size(); i++) {
-            if(!allContacts.get(i).getUsername().equals(myUsername)){
-                this.contacts.add(allContacts.get(i).getUsername());
+        if(allContacts != null) {
+            for (int i = 0; i < allContacts.size(); i++) {
+                if(!allContacts.get(i).getUsername().equals(myUsername)){
+                    this.contacts.add(allContacts.get(i).getUsername());
+                }
             }
         }
         LazyAdapter adapter = new LazyAdapter(getActivity(), this.contacts);
