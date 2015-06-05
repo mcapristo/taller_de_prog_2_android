@@ -54,7 +54,7 @@ public class ChatArrayAdapter extends ArrayAdapter {
         ChatMessageDTO chatMessageObj = getItem(position);
         chatText = (TextView) row.findViewById(R.id.singleMessage);
         chatText.setText(chatMessageObj.getBody());
-        chatText.setBackgroundResource(chatMessageObj.getLeft() ? R.color.abc_search_url_text : R.color.background_floating_material_light);
+        //chatText.setBackgroundResource(chatMessageObj.getLeft() ? R.color. : R.color.background_floating_material_light);
         singleMessageContainer.setGravity(chatMessageObj.getLeft() ? Gravity.LEFT : Gravity.RIGHT);
         return row;
     }
