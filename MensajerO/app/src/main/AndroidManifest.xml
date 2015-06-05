@@ -35,7 +35,7 @@
             android:label="@string/title_activity_contact_fragment" >
         </activity>
         <activity
-            android:name=".activity.UserDetail"
+            android:name=".activity.UserDetailActivity"
             android:label="@string/title_activity_user_detail" >
         </activity>
         <activity
@@ -45,6 +45,10 @@
         <activity
             android:name=".activity.ChatActivity"
             android:label="@string/title_activity_chat" >
+        </activity>
+        <activity
+            android:name=".activity.EditUserActivity"
+            android:label="@string/title_activity_edit_user" >
         </activity>
     </application>
 

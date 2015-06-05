@@ -1,5 +1,6 @@
 package grupo3.tallerprogramacion2.mensajero.service.impl;
 
+import android.app.DownloadManager;
 import android.support.v4.app.FragmentActivity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -20,12 +21,15 @@ import grupo3.tallerprogramacion2.mensajero.activity.ChatActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.ChatFragment;
 import grupo3.tallerprogramacion2.mensajero.activity.ContactFragment;
 import grupo3.tallerprogramacion2.mensajero.activity.CreateUserActivity;
+import grupo3.tallerprogramacion2.mensajero.activity.EditUserActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.LoginActivity;
 import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
+import grupo3.tallerprogramacion2.mensajero.dto.BaseDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTOContainer;
 import grupo3.tallerprogramacion2.mensajero.dto.ContactsDTOContainer;
 import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTOContainer;
+import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTOContainer;
 import grupo3.tallerprogramacion2.mensajero.factory.RequestQueueFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
@@ -290,6 +294,40 @@ public class RestServiceImpl implements RestService {
         };
 
         // Add the request to the RequestQueue.
+        RequestQueueFactory.getRequestQueue(context).add(req);
+    }
+
+    public void updateUser(final String username, final String token, UserDTO user, final EditUserActivity context){
+        String url = UrlConstants.getUserServiceUrl();
+
+        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject> () {
+            @Override
+            public void onResponse(JSONObject response) {
+                BaseDTO responseContainer =
+                        new Gson().fromJson(response.toString(), BaseDTO.class);
+                if("OK".equals(responseContainer.getResult())) {
+                    context.handleResponse();
+                } else {
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        };
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, user.toJSONObject(), responseListener, errorListener){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
         RequestQueueFactory.getRequestQueue(context).add(req);
     }
 }

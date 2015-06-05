@@ -11,7 +11,7 @@ import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 
 
-public class UserDetail extends ActionBarActivity {
+public class UserDetailActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

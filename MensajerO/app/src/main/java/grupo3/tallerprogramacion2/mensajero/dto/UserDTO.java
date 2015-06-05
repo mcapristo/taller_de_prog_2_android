@@ -1,5 +1,9 @@
 package grupo3.tallerprogramacion2.mensajero.dto;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 public class UserDTO extends BaseDTO {
 
     private String username;
@@ -46,5 +50,16 @@ public class UserDTO extends BaseDTO {
 
     public void setOnline(boolean online){
         this.online = online;
+    }
+
+    public JSONObject toJSONObject(){
+        HashMap<String,String> params = new HashMap<String,String>();
+        if (this.username != "") params.put("username", this.username);
+        if (this.name != "") params.put("name", this.name);
+        if (this.password != "") params.put("password", this.password);
+        if (this.token != "") params.put("token", this.token);
+        //TODO ver si hace falta online
+        return new JSONObject(params);
+
     }
 }
