@@ -225,7 +225,7 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
-    public void sendMessage(final String token, ChatMessageDTO message, ChatActivity context) {
+    public void sendMessage(final String token, ChatMessageDTO message, final ChatActivity context) {
         String url = UrlConstants.getMessageServiceUrl();
 
         final String emisor = message.getEmisor();
@@ -239,12 +239,17 @@ public class RestServiceImpl implements RestService {
                 new Response.Listener<JSONObject> () {
                     @Override
                     public void onResponse(JSONObject response) {
-                        int a = 0;
+                        UserDTOContainer chatContainer = new Gson().fromJson(response.toString(), UserDTOContainer.class);
+                        if("OK".equals(chatContainer.getResult())) {
+                            // TODO, log
+                        } else {
+                            context.handleUnexpectedError(chatContainer.getCode());
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                int a = 0;
+                context.handleUnexpectedError(1001);
             }
         })
         {
@@ -274,13 +279,13 @@ public class RestServiceImpl implements RestService {
                         if("OK".equals(messagesContainer.getResult())) {
                             context.LoadMessages(messagesContainer.getData());
                         } else {
-                            int a = 0;
+                            context.handleUnexpectedError(messagesContainer.getCode());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
+                context.handleUnexpectedError(1001);
             }
         })
         {
@@ -308,6 +313,7 @@ public class RestServiceImpl implements RestService {
                 if("OK".equals(responseContainer.getResult())) {
                     context.handleResponse();
                 } else {
+                    context.handleUnexpectedError(responseContainer.getCode());
                 }
             }
         };
@@ -315,7 +321,7 @@ public class RestServiceImpl implements RestService {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
+                context.handleUnexpectedError(1001);
             }
         };
 
