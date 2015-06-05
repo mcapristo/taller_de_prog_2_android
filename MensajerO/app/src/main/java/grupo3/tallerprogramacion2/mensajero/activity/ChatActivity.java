@@ -86,11 +86,9 @@ public class ChatActivity extends ActionBarActivity {
 
             @Override
             public void onClick(View arg0) {
-                String id = String.format("%s%s%d", username, receptor, chatArrayAdapter.getCount());
-                ChatMessageDTO message = new ChatMessageDTO(id, false, chatText.getText().toString(), username, receptor);
-                chatArrayAdapter.add(message);
-                chatText.setText("");
+                ChatMessageDTO message = new ChatMessageDTO(false, chatText.getText().toString(), username, receptor);
                 restService.sendMessage(token, message, activity);
+                chatText.setText("");
             }
         });
 

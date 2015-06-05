@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
 import grupo3.tallerprogramacion2.mensajero.dto.BaseDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTOContainer;
+import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTOSingleContainer;
 import grupo3.tallerprogramacion2.mensajero.dto.ContactsDTOContainer;
 import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTOContainer;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
@@ -225,7 +227,7 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
-    public void sendMessage(final String token, ChatMessageDTO message, ChatActivity context) {
+    public void sendMessage(final String token, final ChatMessageDTO message, final ChatActivity context) {
         String url = UrlConstants.getMessageServiceUrl();
 
         final String emisor = message.getEmisor();
@@ -239,7 +241,15 @@ public class RestServiceImpl implements RestService {
                 new Response.Listener<JSONObject> () {
                     @Override
                     public void onResponse(JSONObject response) {
-                        int a = 0;
+                        ChatMessageDTOSingleContainer messageContainer =
+                                new Gson().fromJson(response.toString(), ChatMessageDTOSingleContainer.class);
+                        ArrayList<ChatMessageDTO> messages = new ArrayList<ChatMessageDTO>();
+                        messages.add(messageContainer.getData());
+                        if("OK".equals(messageContainer.getResult())) {
+                            context.LoadMessages(messages);
+                        } else {
+                            int a = 0;
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

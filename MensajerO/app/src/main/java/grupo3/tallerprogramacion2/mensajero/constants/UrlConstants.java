@@ -2,8 +2,8 @@ package grupo3.tallerprogramacion2.mensajero.constants;
 
 public class UrlConstants {
 
-    public static final String BASE_URL = "http://mensajero";
-    // public static final String LOCALHOST_URL = "http://10.0.2.2";
+    //public static final String BASE_URL = "http://mensajero";
+    public static final String BASE_URL = "http://10.0.2.2";
     public static final String LOCALHOST_PORT = ":8000/";
     public static final String API = "api/";
     public static final String LOGIN_SERVICE = "login";

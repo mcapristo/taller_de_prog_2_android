@@ -10,8 +10,7 @@ public class ChatMessageDTO {
     private String emisor;
     private String receptor;
 
-    public ChatMessageDTO(String id, boolean left, String message, String emisor, String receptor) {
-        this.id = id;
+    public ChatMessageDTO(boolean left, String message, String emisor, String receptor) {
         this.left = left;
         this.body = message;
         this.emisor = emisor;

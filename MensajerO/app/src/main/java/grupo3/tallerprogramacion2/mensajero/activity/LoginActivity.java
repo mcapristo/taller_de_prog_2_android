@@ -97,9 +97,6 @@ public class LoginActivity extends ActionBarActivity {
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        email = "mateo";
-        password = "contrasenia";
-
         boolean cancel = false;
         View focusView = null;
 
