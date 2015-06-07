@@ -1,6 +1,7 @@
 package grupo3.tallerprogramacion2.mensajero.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,7 @@ import java.util.TimerTask;
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTO;
+import grupo3.tallerprogramacion2.mensajero.exceptions.ExceptionsHandle;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
@@ -36,6 +38,8 @@ public class ChatActivity extends ActionBarActivity {
     private String myUsername;
     private String myToken;
     private String recpetorUsername;
+
+    private AlertDialog errorDialog;
 
     private boolean side = false;
     Timer timer;
@@ -150,5 +154,10 @@ public class ChatActivity extends ActionBarActivity {
                 }
             });
         }
+    }
+
+    public void handleUnexpectedError(int errorCode) {
+        this.errorDialog = (new ExceptionsHandle(this, errorCode)).loadError();
+        this.errorDialog.show();
     }
 }

@@ -1,5 +1,6 @@
 package grupo3.tallerprogramacion2.mensajero.activity;
 
+import android.app.AlertDialog;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
+import grupo3.tallerprogramacion2.mensajero.exceptions.ExceptionsHandle;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
@@ -17,6 +19,8 @@ public class EditUserActivity extends ActionBarActivity {
     private final RestService restService = RestServiceFactory.getRestService();
     private String username;
     private String token;
+
+    private AlertDialog errorDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,5 +86,10 @@ public class EditUserActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void handleUnexpectedError(int errorCode) {
+        this.errorDialog = (new ExceptionsHandle(this, errorCode)).loadError();
+        this.errorDialog.show();
     }
 }

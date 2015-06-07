@@ -30,7 +30,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_toLeftOf="@+id/buttonSend"
-            android:background="#ffe5ffdc" />
+            android:background="#ffe5afdc" />
 
         <Button
             android:layout_width="wrap_content"

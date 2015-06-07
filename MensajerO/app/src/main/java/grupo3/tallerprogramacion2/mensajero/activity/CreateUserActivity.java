@@ -47,17 +47,6 @@ public class CreateUserActivity extends ActionBarActivity {
                 startActivity(new Intent(CreateUserActivity.this, LoginActivity.class));
             }
         });
-
-        /*
-        errorDialog = new AlertDialog.Builder(this).create();
-        errorDialog.setTitle("Esto es un título");
-        errorDialog.setMessage("Esto es un mensaje de error =(");
-
-        errorDialog.setButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        */
     }
 
 
@@ -84,8 +73,6 @@ public class CreateUserActivity extends ActionBarActivity {
     }
 
     public void handleUnexpectedError(int errorCode) {
-        // ExceptionsHandle error = new ExceptionsHandle(this, errorCode);
-        //this.errorDialog = error.loadError();
         this.errorDialog = (new ExceptionsHandle(this, errorCode)).loadError();
         this.errorDialog.show();
     }

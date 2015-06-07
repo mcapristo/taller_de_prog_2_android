@@ -80,11 +80,11 @@ public class ExceptionsHandle {
                 break;
 
             case 4:
-                this.errorDialog.setMessage("");
+                this.errorDialog.setMessage("No se pudo enviar el mensaje al destinatario =(");
                 break;
 
             case 5:
-                this.errorDialog.setMessage("");
+                this.errorDialog.setMessage("No se pudo cargar el perfil del usuario =(");
                 break;
 
             case 6:
@@ -100,7 +100,7 @@ public class ExceptionsHandle {
                 break;
 
             case 9:
-                this.errorDialog.setMessage("");
+                this.errorDialog.setMessage("No se puedo obtener los mensajes antiguos =(");
                 break;
 
             default:
