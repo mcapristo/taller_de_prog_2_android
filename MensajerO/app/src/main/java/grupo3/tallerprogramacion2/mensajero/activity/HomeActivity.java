@@ -66,7 +66,6 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
         if (id == R.id.action_viewProfile) {
             Intent i = new Intent(this, UserDetailActivity.class);
             i.putExtra(RestService.LOGIN_RESPONSE_NAME, username);
-            i.putExtra(RestService.LOGIN_TOKEN, token);
             startActivity(i);
             return true;
         }
@@ -74,7 +73,6 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
         if (id == R.id.action_editProfile) {
             Intent i = new Intent(this, EditUserActivity.class);
             i.putExtra(RestService.LOGIN_RESPONSE_NAME, username);
-            i.putExtra(RestService.LOGIN_TOKEN, token);
             startActivity(i);
             return true;
         }

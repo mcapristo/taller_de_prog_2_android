@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
+import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 
 public class UserDetailActivity extends ActionBarActivity {
@@ -18,9 +19,11 @@ public class UserDetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
 
+        Bundle args = getIntent().getExtras();
         UserDTO user = new UserDTO();
+        user.setUsername(args.getString(RestService.LOGIN_RESPONSE_NAME));
+
         user.setName("Martin Palermo");
-        user.setUsername("martin@palermo.com");
         user.setOnline(true);
 
         this.completeFields(user);

@@ -7,6 +7,8 @@ import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.AbsListView;
@@ -118,6 +120,32 @@ public class ChatActivity extends ActionBarActivity {
         myTimerTask = new MyTimerTask();
 
         timer.schedule(myTimerTask, 1000, 2000);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_chat, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_viewProfile) {
+            Intent i = new Intent(this, UserDetailActivity.class);
+            i.putExtra(RestService.LOGIN_RESPONSE_NAME, this.recpetorUsername);
+            startActivity(i);
+            return true;
+        }
+
+        if (id == R.id.action_exit) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void getMessages(){
