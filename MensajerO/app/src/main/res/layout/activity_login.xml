@@ -40,8 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Register"
-                android:id="@+id/Login_b_Register"
-                android:layout_gravity="center_horizontal" />
+                android:id="@+id/Login_b_Register" />
 
         </LinearLayout>
     </ScrollView>

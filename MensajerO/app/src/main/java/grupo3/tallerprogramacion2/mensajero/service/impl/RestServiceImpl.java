@@ -108,9 +108,11 @@ public class RestServiceImpl implements RestService {
             }
         };
 
+        /*
         req.setRetryPolicy(new DefaultRetryPolicy(10000,
                 5,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                */
 
         // Add the request to the RequestQueue.
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);
@@ -145,9 +147,11 @@ public class RestServiceImpl implements RestService {
         }
         );
 
+        /*
         req.setRetryPolicy(new DefaultRetryPolicy(10000,
                 5,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                */
 
         // add the request object to the queue to be executed
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);

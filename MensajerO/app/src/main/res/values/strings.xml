@@ -18,4 +18,5 @@
     <string name="title_activity_create_user_response">CreateUserResponseActivity</string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="title_activity_edit_user">EditUser</string>
+    <string name="title_activity_config">ConfigActivity</string>
 </resources>
