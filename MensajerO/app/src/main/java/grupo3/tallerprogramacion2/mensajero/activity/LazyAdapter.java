@@ -35,8 +35,15 @@ public class LazyAdapter extends ArrayAdapter<String> {
         View rowView=inflater.inflate(R.layout.list_item_event, null,true);
 
         TextView txtTitle = (TextView) rowView.findViewById(R.id.contact);
+        TextView txtUsername = (TextView) rowView.findViewById(R.id.username);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        txtTitle.setText(contacts.get(position));
+
+        String[] data = (contacts.get(position)).split("&");
+        String fullName = data[1];
+        String username = data[0];
+
+        txtTitle.setText(fullName);
+        txtUsername.setText(username);
         //imageView.setImageResource(imgid[position]);
         return rowView;
 

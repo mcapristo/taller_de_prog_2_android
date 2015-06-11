@@ -40,6 +40,7 @@ public class ChatActivity extends ActionBarActivity {
     private String myUsername;
     private String myToken;
     private String recpetorUsername;
+    private String recpetorFullname;
 
     private AlertDialog errorDialog;
 
@@ -56,12 +57,13 @@ public class ChatActivity extends ActionBarActivity {
         this.myUsername = args.getString(RestService.LOGIN_RESPONSE_NAME);
         this.myToken= args.getString(RestService.LOGIN_TOKEN);
         this.recpetorUsername = args.getString("contactUsername");
+        this.recpetorFullname = args.getString("contactFullName");
 
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setIcon(R.mipmap.mensajer0_launcher);
-        actionBar.setTitle(args.getString("contactUsername"));
+        actionBar.setTitle(args.getString("contactFullName"));
 
         setTitle(this.recpetorUsername);
 
@@ -116,10 +118,10 @@ public class ChatActivity extends ActionBarActivity {
             timer.cancel();
         }
 
-        timer = new Timer();
-        myTimerTask = new MyTimerTask();
+        //timer = new Timer();
+        //myTimerTask = new MyTimerTask();
 
-        timer.schedule(myTimerTask, 1000, 2000);
+        //timer.schedule(myTimerTask, 1000, 2000);
     }
 
     @Override

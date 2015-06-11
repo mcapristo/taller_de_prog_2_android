@@ -1,12 +1,22 @@
 package grupo3.tallerprogramacion2.mensajero.activity;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;

@@ -10,6 +10,10 @@ public class UserDTO extends BaseDTO {
     private String name;
     private String password;
     private String token;
+    private String profileImage;
+    private String location;
+    private double latitud;
+    private double longitud;
     private boolean online;
 
     public String getUsername() {
@@ -44,6 +48,38 @@ public class UserDTO extends BaseDTO {
         this.token = token;
     }
 
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
     public boolean isOnline(){
         return this.online;
     }
@@ -57,6 +93,10 @@ public class UserDTO extends BaseDTO {
         if (this.username != "") params.put("username", this.username);
         if (this.name != "") params.put("name", this.name);
         if (this.password != "") params.put("password", this.password);
+        if (this.profileImage != "") params.put("profileImage", this.profileImage);
+        if (this.latitud != 0) params.put("latitud", String.valueOf(this.latitud));
+        if (this.longitud != 0) params.put("longitud", String.valueOf(this.longitud));
+        if (this.location != "") params.put("location", this.location);
         if (this.token != "") params.put("token", this.token);
         //TODO ver si hace falta online
         return new JSONObject(params);

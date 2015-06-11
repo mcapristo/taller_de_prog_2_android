@@ -73,6 +73,64 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Ultima ubicación compartida"
+                android:id="@+id/lastLocationLabel"
+                android:layout_weight="0.41" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=""
+                android:id="@+id/lastLocation"
+                android:layout_weight="0.41" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Compartir ubicación"
+                android:id="@+id/compartirUbicacion"
+                android:layout_weight="0.48"
+                android:clickable="true"
+                android:onClick="compartirClick" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dejar de compartir"
+                android:id="@+id/noCompartirUbicacion"
+                android:layout_weight="0.48"
+                android:clickable="true"
+                android:onClick="noCompartirClick" />
+        </LinearLayout>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

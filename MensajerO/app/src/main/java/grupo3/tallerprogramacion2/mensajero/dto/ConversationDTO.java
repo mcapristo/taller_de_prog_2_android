@@ -5,6 +5,7 @@ public class ConversationDTO extends BaseDTO {
     private int total_messages;
     private String user1;
     private String user2;
+    private String datetime;
 
     public String getUsername1() {
         return user1;
@@ -15,4 +16,6 @@ public class ConversationDTO extends BaseDTO {
     }
 
     public int getTotal_messages() { return total_messages; }
+
+    public String getDatetime() { return datetime; }
 }

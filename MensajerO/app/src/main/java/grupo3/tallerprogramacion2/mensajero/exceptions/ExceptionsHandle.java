@@ -21,6 +21,14 @@ public class ExceptionsHandle {
         return(this.errorDialog);
     }
 
+    public AlertDialog loadError(String title, String message) {
+        this.errorDialog.setTitle(title);
+        this.errorDialog.setMessage(message);
+        setButton();
+
+        return(this.errorDialog);
+    }
+
     private void setTitle(int errorCode) {
         switch (errorCode) {
             case 1:

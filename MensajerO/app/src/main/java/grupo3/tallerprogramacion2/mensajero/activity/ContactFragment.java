@@ -3,23 +3,16 @@ package grupo3.tallerprogramacion2.mensajero.activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import grupo3.tallerprogramacion2.mensajero.R;
-import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
@@ -31,6 +24,7 @@ public class ContactFragment extends Fragment {
     private final RestService restService = RestServiceFactory.getRestService();
     private String myUsername;
     private String myToken;
+
 
     public static final ContactFragment newInstance(String message)
     {
@@ -78,7 +72,12 @@ public class ContactFragment extends Fragment {
         if(allContacts != null) {
             for (int i = 0; i < allContacts.size(); i++) {
                 if(!allContacts.get(i).getUsername().equals(myUsername)){
-                    this.contacts.add(allContacts.get(i).getUsername());
+                    String contact = allContacts.get(i).getUsername() + "&" + allContacts.get(i).getName();
+                    String contactLocation = allContacts.get(i).getLocation();
+                    if(contactLocation != null && contactLocation != ""){
+                        contact = contact + " - " + contactLocation;
+                    }
+                    this.contacts.add(contact);
                 }
             }
         }
@@ -94,10 +93,11 @@ public class ContactFragment extends Fragment {
                 if (contacts != null) {
                     if (position <= contacts.size()) {
                         Intent intent = new Intent(getActivity(), ChatActivity.class);
-                        String contact = contacts.get(position);
+                        String contact = (contacts.get(position)).split("&")[0];
                         intent.putExtra(RestService.LOGIN_RESPONSE_NAME, myUsername);
                         intent.putExtra(RestService.LOGIN_TOKEN, myToken);
-                        intent.putExtra("contactUsername", contact);
+                        intent.putExtra("contactUsername", (contacts.get(position)).split("&")[0]);
+                        intent.putExtra("contactFullName", (contacts.get(position)).split("&")[1]);
                         startActivity(intent);
                     }
                 } else {

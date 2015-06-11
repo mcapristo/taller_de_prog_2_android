@@ -3,24 +3,17 @@ package grupo3.tallerprogramacion2.mensajero.activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTO;
-import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
@@ -88,10 +81,11 @@ public class ChatFragment extends Fragment {
                 if (contactsWithConvs != null) {
                     if (position <= contactsWithConvs.size()) {
                         Intent intent = new Intent(getActivity(), ChatActivity.class);
-                        String contact = contactsWithConvs.get(position);
+                        String contact = (contactsWithConvs.get(position)).split("&")[0];
                         intent.putExtra(RestService.LOGIN_RESPONSE_NAME, myUsername);
                         intent.putExtra(RestService.LOGIN_TOKEN, myToken);
-                        intent.putExtra("contactUsername", contact);
+                        intent.putExtra("contactUsername", (contactsWithConvs.get(position)).split("&")[0]);
+                        intent.putExtra("contactFullName", (contactsWithConvs.get(position)).split("&")[1]);
                         startActivity(intent);
                     }
                 } else {
@@ -109,9 +103,21 @@ public class ChatFragment extends Fragment {
         if(chats != null){
             for(int i=0; i < chats.size(); i++){
                 if(chats.get(i).getUsername1().equals(myUserName)){
-                    otherUsernames.add(chats.get(i).getUsername2());
+                    //deberia ser getName2()
+                    String contact = chats.get(i).getUsername2() + "&" + chats.get(i).getUsername2();
+                    /*String contactLocation = chats.get(i).getLocation();
+                    if(contactLocation != ""){
+                        contact = contact + " - " + contactLocation;
+                    }*/
+                    otherUsernames.add(contact);
                 }else {
-                    otherUsernames.add(chats.get(i).getUsername1());
+                    //deberia ser getName1()
+                    String contact = chats.get(i).getUsername1() + "&" + chats.get(i).getUsername1();
+                    /*String contactLocation = chats.get(i).getLocation();
+                    if(contactLocation != ""){
+                        contact = contact + " - " + contactLocation;
+                    }*/
+                    otherUsernames.add(contact);
                 }
             }
         }
