@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -168,7 +169,7 @@ public class RestServiceImpl implements RestService {
                     ConversationDTOContainer conversationContainer =
                             new Gson().fromJson(response.toString(), ConversationDTOContainer.class);
                     if("OK".equals(conversationContainer.getResult())) {
-                        fragment.PopulateContacts(conversationContainer.getData());
+                        fragment.getAllUsers(conversationContainer.getData());
                     } else {
                     }
             }
@@ -231,6 +232,44 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
+    public void getUsers(final String username, final String token, final ChatFragment fragment, final FragmentActivity context){
+        String url = UrlConstants.getUserServiceUrl();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        ContactsDTOContainer contactsContainer =
+                                new Gson().fromJson(response.toString(), ContactsDTOContainer.class);
+                        if("OK".equals(contactsContainer.getResult())) {
+                            fragment.PopulateContacts(contactsContainer.getData());
+                        } else {
+                            int a = 0;
+                            // Do something with userContainer.getCode() to display proper error
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                int a = 0;
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = RequestQueueFactory.getRequestQueue(context).add(req);
+    }
+
+    @Override
     public void sendMessage(final String token, final ChatMessageDTO message, final ChatActivity context) {
         String url = UrlConstants.getMessageServiceUrl();
 
@@ -240,6 +279,9 @@ public class RestServiceImpl implements RestService {
         params.put("emisor", message.getEmisor());
         params.put("receptor", message.getReceptor());
         params.put("body", message.getBody());
+
+        String a = new JSONObject(params).toString();
+        int b = 0;
 
         JsonObjectRequest req = new JsonObjectRequest(url, new JSONObject(params),
                 new Response.Listener<JSONObject> () {
@@ -332,6 +374,8 @@ public class RestServiceImpl implements RestService {
                 VolleyLog.e("Error: ", error.getMessage());
             }
         };
+
+        JSONObject a = user.toJSONObject();
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, url, user.toJSONObject(), responseListener, errorListener){
             @Override

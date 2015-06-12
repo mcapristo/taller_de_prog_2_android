@@ -11,9 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.aplication.MensajerO;
 import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTO;
+import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
@@ -21,6 +25,7 @@ public class ChatFragment extends Fragment {
     private static final String TAG = "ChatFragment";
     SwipeRefreshLayout swipeLayout;
     protected ArrayList<String> contactsWithConvs = new ArrayList<String>();
+    protected ArrayList<ConversationDTO> convs = new ArrayList<ConversationDTO>();
     private final RestService restService = RestServiceFactory.getRestService();
     private String myUsername;
     private String myToken;
@@ -64,9 +69,8 @@ public class ChatFragment extends Fragment {
         restService.getConversations(this.myUsername, this.myToken, this, getActivity());
     }
 
-    public void PopulateContacts(ArrayList<ConversationDTO> chats){
-        this.contactsWithConvs = getUsersFromConversation(chats, myUsername);
-
+    public void PopulateContacts(ArrayList<UserDTO> users){
+        this.contactsWithConvs = getUsersFromConversation(convs, myUsername, users);
         ListView lst = (ListView) getView().findViewById(R.id.listView);
 
         LazyAdapter adapter=new LazyAdapter(getActivity(), this.contactsWithConvs);
@@ -97,26 +101,40 @@ public class ChatFragment extends Fragment {
 
     }
 
-    private ArrayList<String> getUsersFromConversation(ArrayList<ConversationDTO> chats, String myUserName){
+    public void getAllUsers(ArrayList<ConversationDTO> conversations){
+        this.convs = conversations;
+        restService.getUsers(myUsername, myToken, this, this.getActivity());
+    }
+
+    private ArrayList<String> getUsersFromConversation(ArrayList<ConversationDTO> chats, String myUserName, ArrayList<UserDTO> users){
         ArrayList<String> otherUsernames = new ArrayList<String>();
 
         if(chats != null){
             for(int i=0; i < chats.size(); i++){
+                UserDTO user = new UserDTO();
                 if(chats.get(i).getUsername1().equals(myUserName)){
-                    //deberia ser getName2()
-                    String contact = chats.get(i).getUsername2() + "&" + chats.get(i).getUsername2();
-                    /*String contactLocation = chats.get(i).getLocation();
+                    for(int j=0; j < users.size(); j++){
+                        if(users.get(j).getUsername().equals(chats.get(i).getUsername2())){
+                            user = users.get(j);
+                        }
+                    }
+                    String contact = user.getUsername() + "&" + user.getName();
+                    String contactLocation = user.getLocation();
                     if(contactLocation != ""){
                         contact = contact + " - " + contactLocation;
-                    }*/
+                    }
                     otherUsernames.add(contact);
                 }else {
-                    //deberia ser getName1()
-                    String contact = chats.get(i).getUsername1() + "&" + chats.get(i).getUsername1();
-                    /*String contactLocation = chats.get(i).getLocation();
+                    for(int j=0; j < users.size(); j++){
+                        if(users.get(j).getUsername().equals(chats.get(i).getUsername1())){
+                            user = users.get(j);
+                        }
+                    }
+                    String contact = user.getUsername() + "&" + user.getName();
+                    String contactLocation = user.getLocation();
                     if(contactLocation != ""){
                         contact = contact + " - " + contactLocation;
-                    }*/
+                    }
                     otherUsernames.add(contact);
                 }
             }

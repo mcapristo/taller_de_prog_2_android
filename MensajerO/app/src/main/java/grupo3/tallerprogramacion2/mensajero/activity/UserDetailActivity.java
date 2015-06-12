@@ -22,8 +22,8 @@ public class UserDetailActivity extends ActionBarActivity {
         Bundle args = getIntent().getExtras();
         UserDTO user = new UserDTO();
         user.setUsername(args.getString(RestService.LOGIN_RESPONSE_NAME));
+        user.setName(args.getString(RestService.LOGIN_FULL_NAME));
 
-        user.setName("Martin Palermo");
         user.setOnline(true);
 
         this.completeFields(user);

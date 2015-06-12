@@ -22,12 +22,16 @@ public interface RestService {
     public final static String RESPONSE_CODE = "grupo3.tallerprogramacion2.mensajero.service.RestService.CODE";
     public final static String LOGIN_RESPONSE_NAME = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_RESPONSE_NAME";
     public final static String LOGIN_TOKEN = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_TOKEN";
+    public final static String LOGIN_FULL_NAME = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_FULL_NAME";
+    public final static String LOGIN_PASSWORD = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_PASSWORD";
 
     public void login(String username, String password, final LoginActivity context) throws JSONException;
 
     public void createUser(String userName, String fullName, String password, final CreateUserActivity context);
 
     public void getUsers(String userName, String token, final ContactFragment fragment, final FragmentActivity context);
+
+    public void getUsers(String userName, String token, final ChatFragment fragment, final FragmentActivity context);
 
     public void getConversations(String userName, String token, final ChatFragment fragment, final FragmentActivity context);
 

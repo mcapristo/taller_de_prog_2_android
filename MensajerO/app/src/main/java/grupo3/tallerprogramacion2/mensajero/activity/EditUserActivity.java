@@ -33,10 +33,12 @@ public class EditUserActivity extends ActionBarActivity {
     private final RestService restService = RestServiceFactory.getRestService();
     private String username;
     private String token;
+    private String fullName;
+    private String password;
     private Location location;
     private LocationManager mlocManager;
     private MyLocationListener mlocListener;
-    private String barrio;
+    private String dir;
     private AlertDialog errorDialog;
 
     @Override
@@ -47,13 +49,14 @@ public class EditUserActivity extends ActionBarActivity {
         Bundle args = getIntent().getExtras();
         this.username = args.getString(RestService.LOGIN_RESPONSE_NAME);
         this.token = args.getString(RestService.LOGIN_TOKEN);
+        this.fullName = args.getString(RestService.LOGIN_FULL_NAME);
+        this.password = args.getString(RestService.LOGIN_PASSWORD);
 
         UserDTO user = new UserDTO();
-        user.setName("mateo bosco");
-        user.setPassword("contrasenia");
+        user.setName(this.fullName);
+        user.setPassword(this.password);
 
         this.completeField(user);
-
     }
 
     public void completeField(UserDTO user){
@@ -144,7 +147,9 @@ public class EditUserActivity extends ActionBarActivity {
         {
             mlocListener = new MyLocationListener();
             mlocListener.setMainActivity(this);
-            mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) mlocListener);
+            Location loc = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            setLocation(loc);
+            //mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) mlocListener);
         }
     }
 
@@ -164,29 +169,33 @@ public class EditUserActivity extends ActionBarActivity {
 
     public void setLocation(Location loc){
         //Obtener el barrio a partir de la latitud y la longitud (necesita conectividad a internet)
-        if(loc.getLatitude() !=0.0 && loc.getLongitude() != 0.0) {
+        if(loc != null && loc.getLatitude() !=0.0 && loc.getLongitude() != 0.0) {
             try {
                 Geocoder geocoder = new Geocoder(this, Locale.getDefault());
                 List<Address> list = geocoder.getFromLocation(loc.getLatitude(), loc.getLongitude(),1);
 
                 if(!list.isEmpty()){
                     Address address = list.get(0);
-                    barrio = address.getSubLocality();
+                    String dir = address.getSubLocality();
 
-                    if(barrio!=null){
-                        TextView locationTextView = (TextView)findViewById(R.id.lastLocation);
-                        locationTextView.setText(barrio);
-                    }else{
+                    if(dir != null){
 
+                    }else if (address.getThoroughfare() != null && address.getSubThoroughfare() != null){
+                        dir = address.getThoroughfare() + " " + address.getSubThoroughfare();
+                    }else if(address.getLocality() != null){
+                        dir = address.getLocality();
                     }
-                    mlocManager.removeUpdates((LocationListener) mlocListener);
+
+                    this.location = loc;
+                    TextView locationTextView = (TextView)findViewById(R.id.lastLocation);
+                    locationTextView.setText(dir);
+
+                    //mlocManager.removeUpdates((LocationListener) mlocListener);
 
                     //send to server
                     UserDTO modifiedUser = new UserDTO();
-                    TextView locationTextView = (TextView)findViewById(R.id.lastLocation);
-                    String newLocation = locationTextView.getText().toString();
                     modifiedUser.setUsername(username);
-                    modifiedUser.setLocation(newLocation);
+                    modifiedUser.setLocation(dir);
                     restService.updateUser(username, token, modifiedUser, this);
                 }
             } catch (IOException e) {

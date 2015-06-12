@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.aplication.MensajerO;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
@@ -66,6 +67,8 @@ public class ContactFragment extends Fragment {
     }
 
     public void PopulateContacts(ArrayList<UserDTO> allContacts) {
+        ((MensajerO) this.getActivity().getApplication()).setUsers(allContacts);
+
         ListView lst = (ListView) getView().findViewById(R.id.listView);
 
         this.contacts.clear();

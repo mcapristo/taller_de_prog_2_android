@@ -118,10 +118,10 @@ public class ChatActivity extends ActionBarActivity {
             timer.cancel();
         }
 
-        //timer = new Timer();
-        //myTimerTask = new MyTimerTask();
+        timer = new Timer();
+        myTimerTask = new MyTimerTask();
 
-        //timer.schedule(myTimerTask, 1000, 2000);
+        timer.schedule(myTimerTask, 1000, 2000);
     }
 
     @Override

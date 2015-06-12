@@ -137,6 +137,8 @@ public class LoginActivity extends ActionBarActivity {
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra(RestService.LOGIN_RESPONSE_NAME, response.getJSONObject("data").getString("username"));
             intent.putExtra(RestService.LOGIN_TOKEN, response.getJSONObject("data").getString("token"));
+            intent.putExtra(RestService.LOGIN_FULL_NAME, response.getJSONObject("data").getString("name"));
+            intent.putExtra(RestService.LOGIN_PASSWORD, mPasswordView.getText());
             startActivity(intent);
             finish();
         }else{
