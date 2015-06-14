@@ -52,31 +52,6 @@ public class RestServiceImpl implements RestService {
     protected RestServiceImpl() {
     }
 
-    /*
-    @Override
-    public void login(String username, String password, final LoginActivity context) {
-        String url = UrlConstants.getLoginServiceUrl() + username + "/" + password;
-
-        // Request a string response from the provided URL.
-        GsonRequest request = new GsonRequest(url, UserDTO.class, null,
-                new Response.Listener<UserDTO>() {
-                    @Override
-                    public void onResponse(UserDTO user) {
-                        context.processLoginResponse(user);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        context.handleUnexpectedError(error);
-                    }
-        });
-
-        // Add the request to the RequestQueue.
-        RequestQueueFactory.getRequestQueue(context).add(request);
-    }
-    */
-
     @Override
     public void login(final String username, final String password, final LoginActivity context) throws JSONException{
         String url = UrlConstants.getLoginServiceUrl();
@@ -85,12 +60,12 @@ public class RestServiceImpl implements RestService {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // handle response
-                        try {
-                            String username = response.getString("result");
-                            context.processLoginResponse(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        UserDTOContainer userContainer = new Gson().fromJson(response.toString(), UserDTOContainer.class);
+                        if("OK".equals(userContainer.getResult())) {
+                            context.processLoginResponse(userContainer.getData());
+                        } else {
+                            context.handleUnexpectedError(userContainer.getCode());
+                            context.showProgress(false);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -280,9 +255,6 @@ public class RestServiceImpl implements RestService {
         params.put("receptor", message.getReceptor());
         params.put("body", message.getBody());
 
-        String a = new JSONObject(params).toString();
-        int b = 0;
-
         JsonObjectRequest req = new JsonObjectRequest(url, new JSONObject(params),
                 new Response.Listener<JSONObject> () {
                     @Override
@@ -387,5 +359,40 @@ public class RestServiceImpl implements RestService {
             }
         };
         RequestQueueFactory.getRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void getUser(final String username, final String token, final EditUserActivity context){
+        String url = UrlConstants.getUserServiceUrl() +  "?username=" + username;
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        UserDTOContainer userContainer = new Gson().fromJson(response.toString(), UserDTOContainer.class);
+                        if("OK".equals(userContainer.getResult())) {
+                            context.populateData(userContainer.getData());
+                        } else {
+                            context.handleUnexpectedError(userContainer.getCode());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError(1001);
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        Request response = RequestQueueFactory.getRequestQueue(context).add(req);
     }
 }

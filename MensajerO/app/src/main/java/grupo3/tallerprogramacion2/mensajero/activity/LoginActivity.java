@@ -132,19 +132,14 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
-    public void processLoginResponse(JSONObject response) throws JSONException {
-        if(("OK").equals(response.getString("result"))){
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra(RestService.LOGIN_RESPONSE_NAME, response.getJSONObject("data").getString("username"));
-            intent.putExtra(RestService.LOGIN_TOKEN, response.getJSONObject("data").getString("token"));
-            intent.putExtra(RestService.LOGIN_FULL_NAME, response.getJSONObject("data").getString("name"));
-            intent.putExtra(RestService.LOGIN_PASSWORD, mPasswordView.getText());
-            startActivity(intent);
-            finish();
-        }else{
-            this.handleUnexpectedError(2);
-            showProgress(false);
-        }
+    public void processLoginResponse(UserDTO user){
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra(RestService.LOGIN_RESPONSE_NAME, user.getUsername());
+        intent.putExtra(RestService.LOGIN_TOKEN, user.getToken());
+        intent.putExtra(RestService.LOGIN_FULL_NAME, user.getName());
+        intent.putExtra(RestService.LOGIN_PASSWORD, mPasswordView.getText().toString());
+        startActivity(intent);
+        finish();
     }
 
     public void handleError(UserDTO userDTO) {

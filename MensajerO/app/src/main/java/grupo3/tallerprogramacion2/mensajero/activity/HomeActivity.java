@@ -81,7 +81,6 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
             Intent i = new Intent(this, UserDetailActivity.class);
             i.putExtra(RestService.LOGIN_RESPONSE_NAME, username);
             i.putExtra(RestService.LOGIN_FULL_NAME, fullName);
-            i.putExtra(RestService.LOGIN_PASSWORD, password);
             startActivity(i);
             return true;
         }
@@ -90,7 +89,6 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
             Intent i = new Intent(this, EditUserActivity.class);
             i.putExtra(RestService.LOGIN_RESPONSE_NAME, username);
             i.putExtra(RestService.LOGIN_TOKEN, token);
-            i.putExtra(RestService.LOGIN_FULL_NAME, fullName);
             i.putExtra(RestService.LOGIN_PASSWORD, password);
             startActivity(i);
             return true;

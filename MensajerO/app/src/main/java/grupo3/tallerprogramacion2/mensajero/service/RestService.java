@@ -24,6 +24,8 @@ public interface RestService {
     public final static String LOGIN_TOKEN = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_TOKEN";
     public final static String LOGIN_FULL_NAME = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_FULL_NAME";
     public final static String LOGIN_PASSWORD = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_PASSWORD";
+    public final static String LOGIN_LOCATION = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_LOCATION";
+    public final static String LOGIN_IMAGE = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_IMAGE";
 
     public void login(String username, String password, final LoginActivity context) throws JSONException;
 
@@ -40,4 +42,6 @@ public interface RestService {
     public void getMessages(String userName, String token, String receptor, final ChatActivity context);
 
     public void updateUser(final String username, final String token, UserDTO modifiedUser, final EditUserActivity context);
+
+    public void getUser(final String username, final String token, final EditUserActivity context);
 }
