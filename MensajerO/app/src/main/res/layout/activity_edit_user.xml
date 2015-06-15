@@ -22,6 +22,7 @@
             android:id="@+id/profileImage"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.45"
+            android:background="@color/background_floating_material_light"
             android:contentDescription="profileImage" />
 
         <TableRow
