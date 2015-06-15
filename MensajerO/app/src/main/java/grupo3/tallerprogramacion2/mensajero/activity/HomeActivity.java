@@ -86,8 +86,9 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
             return true;
         }
 
-        if (id == R.id.action_exit) {
-            finish();
+        if (id == R.id.action_logOut) {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
             return true;
         }
 
@@ -107,5 +108,11 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
     }
 }

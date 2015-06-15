@@ -44,7 +44,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create"
+        android:text="Crear"
         android:id="@+id/CreateUser_b_Create"
         android:layout_below="@+id/CreateUser_f_Password"
         android:layout_alignParentRight="true"
@@ -57,7 +57,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
+        android:text="Cancelar"
         android:id="@+id/CreateUser_b_Cancel"
         android:layout_below="@+id/CreateUser_b_Create"
         android:layout_alignParentRight="true"

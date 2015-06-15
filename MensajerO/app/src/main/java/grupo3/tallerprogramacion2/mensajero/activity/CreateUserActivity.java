@@ -49,31 +49,6 @@ public class CreateUserActivity extends ActionBarActivity {
         });
     }
 
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_user, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    */
-
     public void handleUnexpectedError(int errorCode) {
         this.errorDialog = (new ExceptionsHandle(this, errorCode)).loadError();
         this.errorDialog.show();
@@ -84,7 +59,6 @@ public class CreateUserActivity extends ActionBarActivity {
         mFullNameView.setError(null);
         mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
         String userName = mUserNameView.getText().toString();
         String fullName = mFullNameView.getText().toString();
         String password = mPasswordView.getText().toString();
@@ -92,24 +66,16 @@ public class CreateUserActivity extends ActionBarActivity {
         restService.createUser(userName, fullName, password, this);
     }
 
-   /* public void processCreateUserRequest(UserDTO userDTO) {
-        if(ResponseConstants.OK_RESPONSE.equals(userDTO.getResult())) {
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra(RestService.LOGIN_RESPONSE_NAME, userDTO.getName());
-            intent.putExtra(RestService.LOGIN_TOKEN, userDTO.getToken());
-            startActivity(intent);
-            finish();
-        } else {
-            // showCredentialsError();
-        }
-    }*/
-
     public void processCreateUserResponse(UserDTO user) {
-        // String username = response.getJSONObject("Data").getString("username");
-        // String name = (String) response.getString("Name");
         Intent intent = new Intent(this, CreateUserResponseActivity.class);
         intent.putExtra(USER_NAME, user.getName());
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
     }
 }

@@ -32,43 +32,43 @@ public class ExceptionsHandle {
     private void setTitle(int errorCode) {
         switch (errorCode) {
             case 1:
-                this.errorDialog.setTitle("Invalid User error");
+                this.errorDialog.setTitle("Username inválido");
                 break;
 
             case 2:
-                this.errorDialog.setTitle("Invalid Password error ");
+                this.errorDialog.setTitle("Password inválido");
                 break;
 
             case 3:
-                this.errorDialog.setTitle("Invalid Token error");
+                this.errorDialog.setTitle("Token inválido");
                 break;
 
             case 4:
-                this.errorDialog.setTitle("Send message error");
+                this.errorDialog.setTitle("Error al envíar mensaje");
                 break;
 
             case 5:
-                this.errorDialog.setTitle("User profile doesnt exists error");
+                this.errorDialog.setTitle("No existe el perfil de usuario");
                 break;
 
             case 6:
-                this.errorDialog.setTitle("User already exist");
+                this.errorDialog.setTitle("Usuario existente");
                 break;
 
             case 7:
-                this.errorDialog.setTitle("No password error");
+                this.errorDialog.setTitle("Falta password");
                 break;
 
             case 8:
-                this.errorDialog.setTitle("No username error");
+                this.errorDialog.setTitle("Falta username");
                 break;
 
             case 9:
-                this.errorDialog.setTitle("Invalid json error");
+                this.errorDialog.setTitle("Json inválido");
                 break;
 
             default:
-                this.errorDialog.setTitle("Unhandle error");
+                this.errorDialog.setTitle("Error desconocido");
                 break;
         }
     }

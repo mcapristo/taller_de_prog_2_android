@@ -123,28 +123,6 @@ public class EditUserActivity extends ActionBarActivity {
         saveOK();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit_user, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void handleUnexpectedError(int errorCode) {
         this.errorDialog = (new ExceptionsHandle(this, errorCode)).loadError();
         this.errorDialog.show();
@@ -331,8 +309,8 @@ public class EditUserActivity extends ActionBarActivity {
     }
 
     public void saveOK() {
-        this.saveOKDialog.setTitle("Save");
-        this.saveOKDialog.setMessage("Save success!");
+        this.saveOKDialog.setTitle("Guardar");
+        this.saveOKDialog.setMessage("Guardado con exito");
         this.saveOKDialog.setButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             }

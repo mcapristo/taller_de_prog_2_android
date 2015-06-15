@@ -34,12 +34,12 @@
                 android:layout_marginTop="16dp"
                 android:textStyle="bold"
                 android:onClick="loginClick"
-                android:text="Sing In" />
+                android:text="Iniciar Sesión" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Register"
+                android:text="Registrarse"
                 android:id="@+id/Login_b_Register" />
 
         </LinearLayout>

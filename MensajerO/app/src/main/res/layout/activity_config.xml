@@ -30,7 +30,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="Guardar"
         android:id="@+id/Config_b_Save"
         android:layout_above="@+id/Config_b_Exit"
         android:layout_centerHorizontal="true"
@@ -39,7 +39,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exit"
+        android:text="Volver"
         android:id="@+id/Config_b_Exit"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

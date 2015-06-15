@@ -36,7 +36,7 @@ class MyPageAdapter extends FragmentPagerAdapter {
             case 0:
                 return "Chats".toUpperCase(l);
             case 1:
-                return "Contacts".toUpperCase(l);
+                return "Contactos".toUpperCase(l);
         }
         return null;
     }

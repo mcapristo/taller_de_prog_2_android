@@ -3,7 +3,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Actualizar</string>
-    <string name="action_exit">Salir</string>
+    <string name="action_logOut">Cerrar sesión</string>
     <string name="action_viewProfile">Ver perfil</string>
     <string name="action_editProfile">Editar perfil</string>
     <string name="title_activity_dashboard">Dashboard</string>

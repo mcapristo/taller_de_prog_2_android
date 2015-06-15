@@ -75,11 +75,15 @@ public class LoginActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_ip) {
             Intent intent = new Intent(this, ConfigActivity.class);
             startActivity(intent);
             return true;
+        }
+
+        if (id == R.id.action_exit) {
+            finish();
+            System.exit(0);
         }
 
         return super.onOptionsItemSelected(item);
@@ -205,5 +209,11 @@ public class LoginActivity extends ActionBarActivity {
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        System.exit(0);
     }
 }
