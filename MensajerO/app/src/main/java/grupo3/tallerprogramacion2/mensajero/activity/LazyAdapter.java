@@ -4,6 +4,7 @@ package grupo3.tallerprogramacion2.mensajero.activity;
  * Created by uriel on 04/05/15.
  */
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.aplication.MensajerO;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 
 public class LazyAdapter extends ArrayAdapter<String> {
@@ -36,16 +38,20 @@ public class LazyAdapter extends ArrayAdapter<String> {
 
         TextView txtTitle = (TextView) rowView.findViewById(R.id.contact);
         TextView txtUsername = (TextView) rowView.findViewById(R.id.username);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.list_image);
 
         String[] data = (contacts.get(position)).split("&");
-        String fullName = data[1];
         String username = data[0];
+        String fullName = data[1];
+
+        if(data.length > 2){
+            String profileImage = data[2];
+            Bitmap image = MensajerO.decodeBase64(profileImage);
+            imageView.setImageBitmap(image);
+        }
 
         txtTitle.setText(fullName);
         txtUsername.setText(username);
-        //imageView.setImageResource(imgid[position]);
         return rowView;
-
     };
 }

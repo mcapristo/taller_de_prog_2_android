@@ -80,6 +80,8 @@ public class ContactFragment extends Fragment {
                     if(contactLocation != null && contactLocation != ""){
                         contact = contact + " - " + contactLocation;
                     }
+                    String profileImage = allContacts.get(i).getProfileImage();
+                    contact = contact + "&" + profileImage;
                     this.contacts.add(contact);
                 }
             }
@@ -99,8 +101,11 @@ public class ContactFragment extends Fragment {
                         String contact = (contacts.get(position)).split("&")[0];
                         intent.putExtra(RestService.LOGIN_RESPONSE_NAME, myUsername);
                         intent.putExtra(RestService.LOGIN_TOKEN, myToken);
-                        intent.putExtra("contactUsername", (contacts.get(position)).split("&")[0]);
-                        intent.putExtra("contactFullName", (contacts.get(position)).split("&")[1]);
+                        intent.putExtra(RestService.CHAT_RECEPTOR_USERNAME, (contacts.get(position)).split("&")[0]);
+                        intent.putExtra(RestService.CHAT_RECEPTOR_FULLNAME, (contacts.get(position)).split("&")[1]);
+                        if((contacts.get(position)).split("&").length > 2){
+                            intent.putExtra(RestService.LOGIN_IMAGE, (contacts.get(position)).split("&")[2]);
+                        }
                         startActivity(intent);
                     }
                 } else {

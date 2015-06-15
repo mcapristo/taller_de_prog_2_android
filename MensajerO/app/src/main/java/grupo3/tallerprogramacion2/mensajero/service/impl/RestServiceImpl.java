@@ -297,8 +297,17 @@ public class RestServiceImpl implements RestService {
                 new Response.Listener<JSONObject> () {
                     @Override
                     public void onResponse(JSONObject response) {
-                        ChatMessageDTOContainer messagesContainer =
-                                new Gson().fromJson(response.toString(), ChatMessageDTOContainer.class);
+                        ChatMessageDTOContainer messagesContainer = new ChatMessageDTOContainer();
+                        try {
+                            if(response.getString("data").equals("[\"\"]")){
+                                messagesContainer.setData(null);
+                            }else{
+                                messagesContainer =
+                                        new Gson().fromJson(response.toString(), ChatMessageDTOContainer.class);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         if("OK".equals(messagesContainer.getResult())) {
                             context.LoadMessages(messagesContainer.getData());
                         } else {

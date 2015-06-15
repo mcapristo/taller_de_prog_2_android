@@ -25,6 +25,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.aplication.MensajerO;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.ConversationDTO;
 import grupo3.tallerprogramacion2.mensajero.exceptions.ExceptionsHandle;
@@ -41,6 +42,7 @@ public class ChatActivity extends ActionBarActivity {
     private String myToken;
     private String recpetorUsername;
     private String recpetorFullname;
+    private String receptorProfileImage;
 
     private AlertDialog errorDialog;
 
@@ -56,16 +58,18 @@ public class ChatActivity extends ActionBarActivity {
         Bundle args = getIntent().getExtras();
         this.myUsername = args.getString(RestService.LOGIN_RESPONSE_NAME);
         this.myToken= args.getString(RestService.LOGIN_TOKEN);
-        this.recpetorUsername = args.getString("contactUsername");
-        this.recpetorFullname = args.getString("contactFullName");
+        this.recpetorUsername = args.getString(RestService.CHAT_RECEPTOR_USERNAME);
+        this.recpetorFullname = args.getString(RestService.CHAT_RECEPTOR_FULLNAME);
+        this.receptorProfileImage = args.getString(RestService.LOGIN_IMAGE);
 
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setIcon(R.mipmap.mensajer0_launcher);
-        actionBar.setTitle(args.getString("contactFullName"));
+        actionBar.setTitle(this.recpetorFullname);
 
-        setTitle(this.recpetorUsername);
+        //setTitle(this.recpetorUsername);
 
         buttonSend = (Button) findViewById(R.id.buttonSend);
 
@@ -138,6 +142,8 @@ public class ChatActivity extends ActionBarActivity {
         if (id == R.id.action_viewProfile) {
             Intent i = new Intent(this, UserDetailActivity.class);
             i.putExtra(RestService.LOGIN_RESPONSE_NAME, this.recpetorUsername);
+            i.putExtra(RestService.LOGIN_FULL_NAME, this.recpetorFullname);
+            i.putExtra(RestService.LOGIN_IMAGE, this.receptorProfileImage);
             startActivity(i);
             return true;
         }

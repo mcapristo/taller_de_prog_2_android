@@ -77,14 +77,6 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_viewProfile) {
-            Intent i = new Intent(this, UserDetailActivity.class);
-            i.putExtra(RestService.LOGIN_RESPONSE_NAME, username);
-            i.putExtra(RestService.LOGIN_FULL_NAME, fullName);
-            startActivity(i);
-            return true;
-        }
-
         if (id == R.id.action_editProfile) {
             Intent i = new Intent(this, EditUserActivity.class);
             i.putExtra(RestService.LOGIN_RESPONSE_NAME, username);

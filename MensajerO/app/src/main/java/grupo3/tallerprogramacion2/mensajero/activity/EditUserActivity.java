@@ -58,6 +58,7 @@ public class EditUserActivity extends ActionBarActivity {
     private MyLocationListener mlocListener;
     private String dir;
     private AlertDialog errorDialog;
+    private AlertDialog saveOKDialog;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static int RESULT_LOAD_IMAGE = 1;
@@ -66,6 +67,7 @@ public class EditUserActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        saveOKDialog = new AlertDialog.Builder(this).create();
         setContentView(R.layout.activity_edit_user);
         ImageView profileImage = (ImageView)findViewById(R.id.profileImage);
         profileImage.setDrawingCacheEnabled(true);
@@ -74,19 +76,8 @@ public class EditUserActivity extends ActionBarActivity {
         this.username = args.getString(RestService.LOGIN_RESPONSE_NAME);
         this.token = args.getString(RestService.LOGIN_TOKEN);
         this.password = args.getString(RestService.LOGIN_PASSWORD);
-        /*this.fullName = args.getString(RestService.LOGIN_FULL_NAME);
-        this.lastLocation = args.getString(RestService.LOGIN_LOCATION);
-        this.profileImage = args.getString(RestService.LOGIN_IMAGE);*/
 
         restService.getUser(username, token, this);
-
-        /*UserDTO user = new UserDTO();
-        user.setName(this.fullName);
-        user.setPassword(this.password);
-        user.setLocation(this.lastLocation);
-        user.setProfileImage(this.profileImage);
-
-        this.completeField(user);*/
     }
 
     public void populateData(UserDTO user){
@@ -129,7 +120,7 @@ public class EditUserActivity extends ActionBarActivity {
     }
 
     public void handleResponse(){
-        int a = 1;
+        saveOK();
     }
 
     @Override
@@ -339,4 +330,13 @@ public class EditUserActivity extends ActionBarActivity {
         }
     }
 
+    public void saveOK() {
+        this.saveOKDialog.setTitle("Save");
+        this.saveOKDialog.setMessage("Save success!");
+        this.saveOKDialog.setButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        this.saveOKDialog.show();
+    }
 }

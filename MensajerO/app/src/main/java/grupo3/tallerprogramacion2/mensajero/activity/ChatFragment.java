@@ -88,8 +88,11 @@ public class ChatFragment extends Fragment {
                         String contact = (contactsWithConvs.get(position)).split("&")[0];
                         intent.putExtra(RestService.LOGIN_RESPONSE_NAME, myUsername);
                         intent.putExtra(RestService.LOGIN_TOKEN, myToken);
-                        intent.putExtra("contactUsername", (contactsWithConvs.get(position)).split("&")[0]);
-                        intent.putExtra("contactFullName", (contactsWithConvs.get(position)).split("&")[1]);
+                        intent.putExtra(RestService.CHAT_RECEPTOR_USERNAME, (contactsWithConvs.get(position)).split("&")[0]);
+                        intent.putExtra(RestService.CHAT_RECEPTOR_FULLNAME, (contactsWithConvs.get(position)).split("&")[1]);
+                        if((contactsWithConvs.get(position)).split("&").length > 2){
+                            intent.putExtra(RestService.LOGIN_IMAGE, (contactsWithConvs.get(position)).split("&")[2]);
+                        }
                         startActivity(intent);
                     }
                 } else {
@@ -123,6 +126,8 @@ public class ChatFragment extends Fragment {
                     if(contactLocation != ""){
                         contact = contact + " - " + contactLocation;
                     }
+                    String profileImage = user.getProfileImage();
+                    contact = contact + "&" + profileImage;
                     otherUsernames.add(contact);
                 }else {
                     for(int j=0; j < users.size(); j++){
@@ -135,6 +140,8 @@ public class ChatFragment extends Fragment {
                     if(contactLocation != ""){
                         contact = contact + " - " + contactLocation;
                     }
+                    String profileImage = user.getProfileImage();
+                    contact = contact + "&" + profileImage;
                     otherUsernames.add(contact);
                 }
             }

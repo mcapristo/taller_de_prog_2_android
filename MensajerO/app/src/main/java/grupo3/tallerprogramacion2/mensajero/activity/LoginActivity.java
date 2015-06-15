@@ -153,6 +153,7 @@ public class LoginActivity extends ActionBarActivity {
     public void handleUnexpectedError(int errorCode) {
         this.errorDialog = (new ExceptionsHandle(this, errorCode)).loadError();
         this.errorDialog.show();
+        showProgress(false);
     }
 
     public void handleUnexpectedError(Exception error) {
