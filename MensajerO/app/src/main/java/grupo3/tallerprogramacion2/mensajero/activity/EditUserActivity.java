@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -88,13 +89,17 @@ public class EditUserActivity extends ActionBarActivity {
         EditText fullnameEditText = (EditText)findViewById(R.id.fullnameEditText);
         EditText passwordEditText = (EditText)findViewById(R.id.passwordEditText);
         TextView locationTextView = (TextView)findViewById(R.id.lastLocation);
+        CheckBox online = (CheckBox)findViewById(R.id.onlineCheckBox);
         ImageView profileImage = (ImageView)findViewById(R.id.profileImage);
         fullnameEditText.setText(user.getName());
         passwordEditText.setText(password);
         locationTextView.setText(user.getLocation());
+        online.setChecked(user.isOnline());
 
-        Bitmap image = MensajerO.decodeBase64(user.getProfileImage());
-        profileImage.setImageBitmap(image);
+        if(user.getProfileImage() != null){
+            Bitmap image = MensajerO.decodeBase64(user.getProfileImage());
+            profileImage.setImageBitmap(image);
+        }
     }
 
     public void cancelButtonOnClick(View v){
@@ -106,16 +111,19 @@ public class EditUserActivity extends ActionBarActivity {
         EditText fullnameEditText = (EditText)findViewById(R.id.fullnameEditText);
         EditText passwordEditText = (EditText)findViewById(R.id.passwordEditText);
         TextView locationTextView = (TextView)findViewById(R.id.lastLocation);
+        CheckBox online = (CheckBox)findViewById(R.id.onlineCheckBox);
         ImageView profileImage = (ImageView)findViewById(R.id.profileImage);
         String newFullname = fullnameEditText.getText().toString();
         String newPassword = passwordEditText.getText().toString();
         String newLocation = locationTextView.getText().toString();
         String image = MensajerO.encodeTobase64(profileImage.getDrawingCache());
+        boolean isOnline = online.isChecked();
         modifiedUser.setUsername(username);
         modifiedUser.setPassword(newPassword);
         modifiedUser.setName(newFullname);
         modifiedUser.setLocation(newLocation);
         modifiedUser.setProfileImage(image);
+        modifiedUser.setOnline(isOnline);
         restService.updateUser(username, token, modifiedUser, this);
     }
 

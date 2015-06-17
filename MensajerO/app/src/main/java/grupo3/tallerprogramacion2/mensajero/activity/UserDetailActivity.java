@@ -29,24 +29,21 @@ public class UserDetailActivity extends ActionBarActivity {
         user.setUsername(args.getString(RestService.LOGIN_RESPONSE_NAME));
         user.setName(args.getString(RestService.LOGIN_FULL_NAME));
         user.setProfileImage(args.getString(RestService.LOGIN_IMAGE));
-
-        user.setOnline(true);
-
         this.completeFields(user);
     }
 
     public void completeFields(UserDTO user){
         TextView nameTextView = (TextView)findViewById(R.id.nameTextView);
         TextView usernameTextView = (TextView)findViewById(R.id.usernameTextView);
-        CheckBox onlineCheckBox = (CheckBox)findViewById(R.id.onlineCheckBox);
         ImageView profileImage = (ImageView)findViewById(R.id.viewProfileImage);
 
         nameTextView.setText(user.getName());
         usernameTextView.setText(user.getUsername());
-        onlineCheckBox.setChecked(user.isOnline());
 
-        Bitmap image = MensajerO.decodeBase64(user.getProfileImage());
-        profileImage.setImageBitmap(image);
+        if(user.getProfileImage() != null){
+            Bitmap image = MensajerO.decodeBase64(user.getProfileImage());
+            profileImage.setImageBitmap(image);
+        }
     }
 
     @Override

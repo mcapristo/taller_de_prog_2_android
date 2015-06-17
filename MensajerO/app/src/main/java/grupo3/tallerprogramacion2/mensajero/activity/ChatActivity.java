@@ -63,13 +63,9 @@ public class ChatActivity extends ActionBarActivity {
         this.receptorProfileImage = args.getString(RestService.LOGIN_IMAGE);
 
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setIcon(R.mipmap.mensajer0_launcher);
         actionBar.setTitle(this.recpetorFullname);
-
-        //setTitle(this.recpetorUsername);
 
         buttonSend = (Button) findViewById(R.id.buttonSend);
 

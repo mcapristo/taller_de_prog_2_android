@@ -72,10 +72,4 @@ public class CreateUserActivity extends ActionBarActivity {
         startActivity(intent);
         finish();
     }
-
-    @Override
-    public void onBackPressed() {
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
-    }
 }

@@ -52,10 +52,4 @@ public class ConfigActivity extends ActionBarActivity {
         });
         this.saveOKDialog.show();
     }
-
-    @Override
-    public void onBackPressed() {
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
-    }
 }

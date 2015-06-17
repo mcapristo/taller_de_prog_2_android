@@ -1,27 +1,20 @@
 package grupo3.tallerprogramacion2.mensajero.activity;
 
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
 public class HomeActivity extends ActionBarActivity implements ActionBar.TabListener {
+
+    private final RestService restService = RestServiceFactory.getRestService();
 
     MyPageAdapter pageAdapter;
     ViewPager mViewPager;
@@ -87,9 +80,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         if (id == R.id.action_logOut) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            return true;
+            restService.logOut(username, token, this);
         }
 
         return super.onOptionsItemSelected(item);
@@ -110,8 +101,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
 
     }
 
-    @Override
-    public void onBackPressed() {
+    public void logOut(){
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
     }

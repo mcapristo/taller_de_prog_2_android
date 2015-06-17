@@ -24,6 +24,7 @@ import grupo3.tallerprogramacion2.mensajero.activity.ChatFragment;
 import grupo3.tallerprogramacion2.mensajero.activity.ContactFragment;
 import grupo3.tallerprogramacion2.mensajero.activity.CreateUserActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.EditUserActivity;
+import grupo3.tallerprogramacion2.mensajero.activity.HomeActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.LoginActivity;
 import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
 import grupo3.tallerprogramacion2.mensajero.dto.BaseDTO;
@@ -152,6 +153,36 @@ public class RestServiceImpl implements RestService {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        RequestQueueFactory.getRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void logOut(final String username, final String token, final HomeActivity context) {
+        String url = UrlConstants.getLogoutServiceUrl();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        context.logOut();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
             }
         })
         {

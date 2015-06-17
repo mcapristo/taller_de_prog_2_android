@@ -8,6 +8,7 @@ public class UrlConstants {
     public static final String HTTP = "http://";
     public static final String API = "api/";
     public static final String LOGIN_SERVICE = "login";
+    public static final String LOGOUT_SERVICE = "logout";
     public static final String USER_SERVICE = "user";
     public static final String CONVERSATION_SERVICE = "conversation";
     public static final String MESSAGE_SERVICE = "message";
@@ -16,6 +17,7 @@ public class UrlConstants {
         return(HTTP + BASE_URL + LOCALHOST_PORT + API + USER_SERVICE);
     }
     public static String getLoginServiceUrl() { return (HTTP + BASE_URL + LOCALHOST_PORT + API + LOGIN_SERVICE); }
+    public static String getLogoutServiceUrl() { return (HTTP + BASE_URL + LOCALHOST_PORT + API + LOGOUT_SERVICE); }
     public static String getUserServiceUrl() { return (HTTP + BASE_URL + LOCALHOST_PORT + API + USER_SERVICE); }
     public static String getConversationServiceUrl() { return (HTTP + BASE_URL + LOCALHOST_PORT + API + CONVERSATION_SERVICE); }
     public static String getMessageServiceUrl() { return (HTTP + BASE_URL + LOCALHOST_PORT + API + MESSAGE_SERVICE); }

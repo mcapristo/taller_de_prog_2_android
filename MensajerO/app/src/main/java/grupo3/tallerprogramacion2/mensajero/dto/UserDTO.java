@@ -98,8 +98,7 @@ public class UserDTO extends BaseDTO {
         if (this.longitud != 0) params.put("longitud", String.valueOf(this.longitud));
         if (this.location != "") params.put("location", this.location);
         if (this.token != "") params.put("token", this.token);
-        //TODO ver si hace falta online
+        params.put("online", String.valueOf(this.online));
         return new JSONObject(params);
-
     }
 }

@@ -31,6 +31,8 @@ public interface RestService {
 
     public void login(String username, String password, final LoginActivity context) throws JSONException;
 
+    public void logOut(String username, String token, final HomeActivity context);
+
     public void createUser(String userName, String fullName, String password, final CreateUserActivity context);
 
     public void getUsers(String userName, String token, final ContactFragment fragment, final FragmentActivity context);

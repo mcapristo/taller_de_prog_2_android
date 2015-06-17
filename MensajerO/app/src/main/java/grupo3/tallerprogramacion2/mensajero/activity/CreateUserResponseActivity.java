@@ -34,11 +34,4 @@ public class CreateUserResponseActivity extends ActionBarActivity {
         mNameView = (TextView) findViewById(R.id.CreateUserResponse_f_UserName);
         mNameView.setText(myUserName + "!");
     }
-
-    @Override
-    public void onBackPressed() {
-        Intent i = new Intent(this, CreateUserActivity.class);
-        startActivity(i);
-    }
-
 }
