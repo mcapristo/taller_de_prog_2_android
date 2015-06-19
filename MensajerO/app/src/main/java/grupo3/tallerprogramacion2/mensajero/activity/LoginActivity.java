@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +21,7 @@ import org.json.JSONObject;
 
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.constants.ResponseConstants;
+import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 import grupo3.tallerprogramacion2.mensajero.exceptions.ExceptionsHandle;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
@@ -137,6 +140,12 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void processLoginResponse(UserDTO user){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(UrlConstants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(RestService.LOGIN_RESPONSE_NAME, user.getUsername());
+        editor.putString(RestService.LOGIN_PASSWORD, mPasswordView.getText().toString());
+        editor.commit();
+
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(RestService.LOGIN_RESPONSE_NAME, user.getUsername());
         intent.putExtra(RestService.LOGIN_TOKEN, user.getToken());

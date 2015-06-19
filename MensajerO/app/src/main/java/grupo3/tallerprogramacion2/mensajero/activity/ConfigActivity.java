@@ -1,8 +1,10 @@
 package grupo3.tallerprogramacion2.mensajero.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,6 +41,12 @@ public class ConfigActivity extends ActionBarActivity {
 
         if (ip.length() > 0) {
             UrlConstants.setBaseUrl(ip);
+
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(UrlConstants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("IP", ip);
+            editor.commit();
+
             this.saveOK();
         }
     }

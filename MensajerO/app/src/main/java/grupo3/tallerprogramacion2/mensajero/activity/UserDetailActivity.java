@@ -29,16 +29,26 @@ public class UserDetailActivity extends ActionBarActivity {
         user.setUsername(args.getString(RestService.LOGIN_RESPONSE_NAME));
         user.setName(args.getString(RestService.LOGIN_FULL_NAME));
         user.setProfileImage(args.getString(RestService.LOGIN_IMAGE));
+
+        String a = args.getString(RestService.CHAT_RECEPTOR_STATE);
+        if(args.getString(RestService.CHAT_RECEPTOR_STATE).equals("(Conectado)")){
+            user.setOnline(true);
+        }else {
+            user.setOnline(false);
+        }
+
         this.completeFields(user);
     }
 
     public void completeFields(UserDTO user){
         TextView nameTextView = (TextView)findViewById(R.id.nameTextView);
         TextView usernameTextView = (TextView)findViewById(R.id.usernameTextView);
+        CheckBox online = (CheckBox)findViewById(R.id.onlineCheckBox);
         ImageView profileImage = (ImageView)findViewById(R.id.viewProfileImage);
 
         nameTextView.setText(user.getName());
         usernameTextView.setText(user.getUsername());
+        online.setChecked(user.isOnline());
 
         if(user.getProfileImage() != null){
             Bitmap image = MensajerO.decodeBase64(user.getProfileImage());

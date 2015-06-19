@@ -89,16 +89,17 @@ public class UserDTO extends BaseDTO {
     }
 
     public JSONObject toJSONObject(){
-        HashMap<String,String> params = new HashMap<String,String>();
+        HashMap<String,Object> params = new HashMap<String,Object>();
         if (this.username != "") params.put("username", this.username);
         if (this.name != "") params.put("name", this.name);
         if (this.password != "") params.put("password", this.password);
         if (this.profileImage != "") params.put("profileImage", this.profileImage);
-        if (this.latitud != 0) params.put("latitud", String.valueOf(this.latitud));
-        if (this.longitud != 0) params.put("longitud", String.valueOf(this.longitud));
+        if (this.latitud != 0) params.put("latitud", this.latitud);
+        if (this.longitud != 0) params.put("longitud", this.longitud);
         if (this.location != "") params.put("location", this.location);
         if (this.token != "") params.put("token", this.token);
-        params.put("online", String.valueOf(this.online));
+        params.put("online", this.online);
+        JSONObject a = new JSONObject(params);
         return new JSONObject(params);
     }
 }

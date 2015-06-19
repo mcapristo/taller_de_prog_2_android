@@ -79,6 +79,15 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
             return true;
         }
 
+        if (id == R.id.action_difusion) {
+            Intent intent = new Intent(this, ChatActivity.class);
+            intent.putExtra(RestService.LOGIN_RESPONSE_NAME, username);
+            intent.putExtra(RestService.LOGIN_TOKEN, token);
+            intent.putExtra(RestService.CHAT_RECEPTOR_USERNAME, "");
+            intent.putExtra(RestService.CHAT_RECEPTOR_FULLNAME, "Difusion");
+            startActivity(intent);
+        }
+
         if (id == R.id.action_logOut) {
             restService.logOut(username, token, this);
         }

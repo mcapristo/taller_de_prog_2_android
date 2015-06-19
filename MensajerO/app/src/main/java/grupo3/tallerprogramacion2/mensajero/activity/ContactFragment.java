@@ -67,25 +67,29 @@ public class ContactFragment extends Fragment {
     }
 
     public void PopulateContacts(ArrayList<UserDTO> allContacts) {
-        ((MensajerO) this.getActivity().getApplication()).setUsers(allContacts);
+        ArrayList<String> onlineUsernames = new ArrayList<String>();
+        ArrayList<String> offlineUsernames = new ArrayList<String>();
 
+        ((MensajerO) this.getActivity().getApplication()).setUsers(allContacts);
         ListView lst = (ListView) getView().findViewById(R.id.listView);
 
         this.contacts.clear();
         if(allContacts != null) {
             for (int i = 0; i < allContacts.size(); i++) {
                 if(!allContacts.get(i).getUsername().equals(myUsername)){
-                    String contact = allContacts.get(i).getUsername() + "&" + allContacts.get(i).getName();
-                    String contactLocation = allContacts.get(i).getLocation();
-                    if(contactLocation != null && contactLocation != ""){
-                        contact = contact + " - " + contactLocation;
+                    UserDTO user = allContacts.get(i);
+                    String contact = loadContact(user);
+                    if(user.isOnline()){
+                        onlineUsernames.add(contact);
+                    }else {
+                        offlineUsernames.add(contact);
                     }
-                    String profileImage = allContacts.get(i).getProfileImage();
-                    contact = contact + "&" + profileImage;
-                    this.contacts.add(contact);
                 }
             }
         }
+        this.contacts.addAll(onlineUsernames);
+        this.contacts.addAll(offlineUsernames);
+
         LazyAdapter adapter = new LazyAdapter(getActivity(), this.contacts);
 
         swipeLayout.setRefreshing(false);
@@ -103,8 +107,9 @@ public class ContactFragment extends Fragment {
                         intent.putExtra(RestService.LOGIN_TOKEN, myToken);
                         intent.putExtra(RestService.CHAT_RECEPTOR_USERNAME, (contacts.get(position)).split("&")[0]);
                         intent.putExtra(RestService.CHAT_RECEPTOR_FULLNAME, (contacts.get(position)).split("&")[1]);
-                        if((contacts.get(position)).split("&").length > 2){
-                            intent.putExtra(RestService.LOGIN_IMAGE, (contacts.get(position)).split("&")[2]);
+                        intent.putExtra(RestService.CHAT_RECEPTOR_STATE, (contacts.get(position)).split("&")[2]);
+                        if((contacts.get(position)).split("&").length > 3){
+                            intent.putExtra(RestService.LOGIN_IMAGE, (contacts.get(position)).split("&")[3]);
                         }
                         startActivity(intent);
                     }
@@ -114,6 +119,23 @@ public class ContactFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public String loadContact(UserDTO user){
+        String contact = user.getUsername() + "&" + user.getName();
+        String contactLocation = user.getLocation();
+        if(contactLocation != null && contactLocation != ""){
+            contact = contact + " - " + contactLocation;
+        }
+        if(user.isOnline()){
+            contact = contact + "&" + "(Conectado)";
+        }else {
+            contact = contact+ "&" + "(No Conectado)";
+        }
+        String profileImage = user.getProfileImage();
+        contact = contact + "&" + profileImage;
+
+        return contact;
     }
 
     public void handleUnexpectedError(Exception error) {

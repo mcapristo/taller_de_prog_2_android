@@ -14,6 +14,7 @@ import grupo3.tallerprogramacion2.mensajero.activity.ContactFragment;
 import grupo3.tallerprogramacion2.mensajero.activity.CreateUserActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.EditUserActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.HomeActivity;
+import grupo3.tallerprogramacion2.mensajero.activity.InitActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.LoginActivity;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
@@ -28,8 +29,11 @@ public interface RestService {
     public final static String LOGIN_IMAGE = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_IMAGE";
     public final static String CHAT_RECEPTOR_USERNAME = "grupo3.tallerprogramacion2.mensajero.service.RestService.CHAT_RECEPTOR_USERNAME";
     public final static String CHAT_RECEPTOR_FULLNAME = "grupo3.tallerprogramacion2.mensajero.service.RestService.CHAT_RECEPTOR_FULLNAME";
+    public final static String CHAT_RECEPTOR_STATE = "grupo3.tallerprogramacion2.mensajero.service.RestService.CHAT_RECEPTOR_STATE";
 
     public void login(String username, String password, final LoginActivity context) throws JSONException;
+
+    public void login(String username, String password, final InitActivity context) throws JSONException;
 
     public void logOut(String username, String token, final HomeActivity context);
 

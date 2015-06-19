@@ -37,6 +37,8 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import grupo3.tallerprogramacion2.mensajero.R;
 import grupo3.tallerprogramacion2.mensajero.aplication.MensajerO;
@@ -60,6 +62,9 @@ public class EditUserActivity extends ActionBarActivity {
     private String dir;
     private AlertDialog errorDialog;
     private AlertDialog saveOKDialog;
+    Timer timer;
+    MyTimerTask myTimerTask;
+
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static int RESULT_LOAD_IMAGE = 1;
@@ -163,13 +168,28 @@ public class EditUserActivity extends ActionBarActivity {
         }
         else
         {
+            TextView locationTextView = (TextView)findViewById(R.id.lastLocation);
+            locationTextView.setText("");
             mlocListener = new MyLocationListener();
             mlocListener.setMainActivity(this);
-            //Location loc = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            //setLocation(loc);
             mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) mlocListener);
             showProgress(true);
+
+            if(timer != null){
+                timer.cancel();
+            }
+
+            timer = new Timer();
+            myTimerTask = new MyTimerTask();
+
+            timer.schedule(myTimerTask, 10000, 10000);
         }
+    }
+
+    public void setLastKnownLocation(){
+        Location loc = mlocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        setLocation(loc);
+        timer.cancel();
     }
 
     public boolean hasConection(Context context) {
@@ -324,5 +344,20 @@ public class EditUserActivity extends ActionBarActivity {
             }
         });
         this.saveOKDialog.show();
+    }
+
+    class MyTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+
+            runOnUiThread(new Runnable(){
+
+                @Override
+                public void run() {
+                    setLastKnownLocation();
+                }
+            });
+        }
     }
 }

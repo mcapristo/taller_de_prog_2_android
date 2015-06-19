@@ -90,8 +90,9 @@ public class ChatFragment extends Fragment {
                         intent.putExtra(RestService.LOGIN_TOKEN, myToken);
                         intent.putExtra(RestService.CHAT_RECEPTOR_USERNAME, (contactsWithConvs.get(position)).split("&")[0]);
                         intent.putExtra(RestService.CHAT_RECEPTOR_FULLNAME, (contactsWithConvs.get(position)).split("&")[1]);
-                        if((contactsWithConvs.get(position)).split("&").length > 2){
-                            intent.putExtra(RestService.LOGIN_IMAGE, (contactsWithConvs.get(position)).split("&")[2]);
+                        intent.putExtra(RestService.CHAT_RECEPTOR_STATE, (contactsWithConvs.get(position)).split("&")[2]);
+                        if((contactsWithConvs.get(position)).split("&").length > 3){
+                            intent.putExtra(RestService.LOGIN_IMAGE, (contactsWithConvs.get(position)).split("&")[3]);
                         }
                         startActivity(intent);
                     }
@@ -111,6 +112,8 @@ public class ChatFragment extends Fragment {
 
     private ArrayList<String> getUsersFromConversation(ArrayList<ConversationDTO> chats, String myUserName, ArrayList<UserDTO> users){
         ArrayList<String> otherUsernames = new ArrayList<String>();
+        ArrayList<String> onlineUsernames = new ArrayList<String>();
+        ArrayList<String> offlineUsernames = new ArrayList<String>();
 
         if(chats != null){
             for(int i=0; i < chats.size(); i++){
@@ -121,32 +124,49 @@ public class ChatFragment extends Fragment {
                             user = users.get(j);
                         }
                     }
-                    String contact = user.getUsername() + "&" + user.getName();
-                    String contactLocation = user.getLocation();
-                    if(contactLocation != ""){
-                        contact = contact + " - " + contactLocation;
+                    String contact = loadContact(user);
+
+                    if(user.isOnline()){
+                        onlineUsernames.add(contact);
+                    }else{
+                        offlineUsernames.add(contact);
                     }
-                    String profileImage = user.getProfileImage();
-                    contact = contact + "&" + profileImage;
-                    otherUsernames.add(contact);
                 }else {
                     for(int j=0; j < users.size(); j++){
                         if(users.get(j).getUsername().equals(chats.get(i).getUsername1())){
                             user = users.get(j);
                         }
                     }
-                    String contact = user.getUsername() + "&" + user.getName();
-                    String contactLocation = user.getLocation();
-                    if(contactLocation != ""){
-                        contact = contact + " - " + contactLocation;
+                    String contact = loadContact(user);
+
+                    if(user.isOnline()){
+                        onlineUsernames.add(contact);
+                    }else {
+                        offlineUsernames.add(contact);
                     }
-                    String profileImage = user.getProfileImage();
-                    contact = contact + "&" + profileImage;
-                    otherUsernames.add(contact);
                 }
             }
         }
+        otherUsernames.addAll(onlineUsernames);
+        otherUsernames.addAll(offlineUsernames);
         return otherUsernames;
+    }
+
+    public String loadContact(UserDTO user){
+        String contact = user.getUsername() + "&" + user.getName();
+        String contactLocation = user.getLocation();
+        if(contactLocation != ""){
+            contact = contact + " - " + contactLocation;
+        }
+        if(user.isOnline()){
+            contact = contact + "&" + "(Conectado)";
+        }else{
+            contact = contact + "&" + "(No Conectado)";
+        }
+        String profileImage = user.getProfileImage();
+        contact = contact + "&" + profileImage;
+
+        return contact;
     }
 
     public void handleUnexpectedError(Exception error) {

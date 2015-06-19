@@ -67,6 +67,10 @@ public class ExceptionsHandle {
                 this.errorDialog.setTitle("Json inválido");
                 break;
 
+            case 1001:
+                this.errorDialog.setTitle("Error de conexión");
+                break;
+
             default:
                 this.errorDialog.setTitle("Error desconocido");
                 break;
@@ -109,6 +113,10 @@ public class ExceptionsHandle {
 
             case 9:
                 this.errorDialog.setMessage("No se puedo obtener los mensajes antiguos =(");
+                break;
+
+            case 1001:
+                this.errorDialog.setMessage("Ha ocurrido un error de conexión. Verifique si esta conectado a la red");
                 break;
 
             default:

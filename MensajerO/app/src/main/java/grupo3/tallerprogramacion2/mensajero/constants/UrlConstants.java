@@ -12,6 +12,7 @@ public class UrlConstants {
     public static final String USER_SERVICE = "user";
     public static final String CONVERSATION_SERVICE = "conversation";
     public static final String MESSAGE_SERVICE = "message";
+    public static final String SHARED_PREFERENCES = "commonKey";
 
     public static String getCreateUserServiceUrl() {
         return(HTTP + BASE_URL + LOCALHOST_PORT + API + USER_SERVICE);
