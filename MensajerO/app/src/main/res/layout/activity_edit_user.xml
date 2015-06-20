@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Online:"
+                android:text="Conectado:"
                 android:id="@+id/textView5"
                 android:gravity="center_vertical"
                 android:layout_weight="0.96" />
@@ -189,7 +189,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancelar"
+                android:text="Volver"
                 android:id="@+id/cancelButton"
                 android:layout_weight="0.48"
                 android:clickable="true"
