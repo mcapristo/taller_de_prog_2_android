@@ -107,9 +107,10 @@ public class ContactFragment extends Fragment {
                         intent.putExtra(RestService.LOGIN_TOKEN, myToken);
                         intent.putExtra(RestService.CHAT_RECEPTOR_USERNAME, (contacts.get(position)).split("&")[0]);
                         intent.putExtra(RestService.CHAT_RECEPTOR_FULLNAME, (contacts.get(position)).split("&")[1]);
-                        intent.putExtra(RestService.CHAT_RECEPTOR_STATE, (contacts.get(position)).split("&")[2]);
-                        if((contacts.get(position)).split("&").length > 3){
-                            intent.putExtra(RestService.LOGIN_IMAGE, (contacts.get(position)).split("&")[3]);
+                        intent.putExtra(RestService.CHAT_RECEPTOR_LOCATION, (contacts.get(position)).split("&")[2]);
+                        intent.putExtra(RestService.CHAT_RECEPTOR_STATE, (contacts.get(position)).split("&")[3]);
+                        if((contacts.get(position)).split("&").length > 4){
+                            intent.putExtra(RestService.LOGIN_IMAGE, (contacts.get(position)).split("&")[4]);
                         }
                         startActivity(intent);
                     }
@@ -124,8 +125,10 @@ public class ContactFragment extends Fragment {
     public String loadContact(UserDTO user){
         String contact = user.getUsername() + "&" + user.getName();
         String contactLocation = user.getLocation();
-        if(contactLocation != null && contactLocation != ""){
-            contact = contact + " - " + contactLocation;
+        if(contactLocation != null){
+            contact = contact + "&" + contactLocation;
+        }else{
+            contact = contact + "&" + "";
         }
         if(user.isOnline()){
             contact = contact + "&" + "(Conectado)";

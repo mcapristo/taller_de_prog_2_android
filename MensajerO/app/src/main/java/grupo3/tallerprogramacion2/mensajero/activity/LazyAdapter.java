@@ -43,15 +43,20 @@ public class LazyAdapter extends ArrayAdapter<String> {
         String[] data = (contacts.get(position)).split("&");
         String username = data[0];
         String fullName = data[1];
-        String state = data[2];
+        String location = data[2];
+        String state = data[3];
 
-        if(data.length > 3){
-            String profileImage = data[3];
+        if(data.length > 4){
+            String profileImage = data[4];
             Bitmap image = MensajerO.decodeBase64(profileImage);
             imageView.setImageBitmap(image);
         }
 
-        txtTitle.setText(fullName + state);
+        if(location != null && location != ""){
+            txtTitle.setText(fullName + " - " + location + state);
+        }else{
+            txtTitle.setText(fullName + state);
+        }
         txtUsername.setText(username);
         return rowView;
     };

@@ -42,6 +42,7 @@ public class ChatActivity extends ActionBarActivity {
     private String myToken;
     private String recpetorUsername;
     private String recpetorFullname;
+    private String receptorLocation;
     private String receptorProfileImage;
     private String receptorState;
 
@@ -62,6 +63,7 @@ public class ChatActivity extends ActionBarActivity {
         this.recpetorUsername = args.getString(RestService.CHAT_RECEPTOR_USERNAME);
         this.recpetorFullname = args.getString(RestService.CHAT_RECEPTOR_FULLNAME);
         this.receptorState = args.getString(RestService.CHAT_RECEPTOR_STATE);
+        this.receptorLocation = args.getString(RestService.CHAT_RECEPTOR_LOCATION);
         this.receptorProfileImage = args.getString(RestService.LOGIN_IMAGE);
 
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -139,10 +141,13 @@ public class ChatActivity extends ActionBarActivity {
 
         if (id == R.id.action_viewProfile) {
             Intent i = new Intent(this, UserDetailActivity.class);
-            i.putExtra(RestService.LOGIN_RESPONSE_NAME, this.recpetorUsername);
-            i.putExtra(RestService.LOGIN_FULL_NAME, this.recpetorFullname);
+            i.putExtra(RestService.LOGIN_RESPONSE_NAME, this.myUsername);
+            i.putExtra(RestService.LOGIN_TOKEN, this.myToken);
+            i.putExtra(RestService.CHAT_RECEPTOR_USERNAME, this.recpetorUsername);
+            /*i.putExtra(RestService.LOGIN_FULL_NAME, this.recpetorFullname);
             i.putExtra(RestService.CHAT_RECEPTOR_STATE, this.receptorState);
-            i.putExtra(RestService.LOGIN_IMAGE, this.receptorProfileImage);
+            i.putExtra(RestService.CHAT_RECEPTOR_LOCATION, this.receptorLocation);
+            i.putExtra(RestService.LOGIN_IMAGE, this.receptorProfileImage);*/
             startActivity(i);
             return true;
         }

@@ -27,6 +27,7 @@ import grupo3.tallerprogramacion2.mensajero.activity.EditUserActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.HomeActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.InitActivity;
 import grupo3.tallerprogramacion2.mensajero.activity.LoginActivity;
+import grupo3.tallerprogramacion2.mensajero.activity.UserDetailActivity;
 import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
 import grupo3.tallerprogramacion2.mensajero.dto.BaseDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
@@ -446,6 +447,41 @@ public class RestServiceImpl implements RestService {
     @Override
     public void getUser(final String username, final String token, final EditUserActivity context){
         String url = UrlConstants.getUserServiceUrl() +  "?username=" + username;
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        UserDTOContainer userContainer = new Gson().fromJson(response.toString(), UserDTOContainer.class);
+                        if("OK".equals(userContainer.getResult())) {
+                            context.populateData(userContainer.getData());
+                        } else {
+                            context.handleUnexpectedError(userContainer.getCode());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError(1001);
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        Request response = RequestQueueFactory.getRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void getUser(final String username, final String token, String receptorUsername, final UserDetailActivity context){
+        String url = UrlConstants.getUserServiceUrl() +  "?username=" + receptorUsername;
 
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {

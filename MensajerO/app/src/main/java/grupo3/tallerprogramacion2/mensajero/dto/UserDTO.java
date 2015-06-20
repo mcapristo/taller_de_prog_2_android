@@ -2,6 +2,7 @@ package grupo3.tallerprogramacion2.mensajero.dto;
 
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class UserDTO extends BaseDTO {
@@ -15,6 +16,8 @@ public class UserDTO extends BaseDTO {
     private double latitud;
     private double longitud;
     private boolean online;
+    private String lastActivityDatetime;
+    private String checkinDatetime;
 
     public String getUsername() {
         return username;
@@ -86,6 +89,14 @@ public class UserDTO extends BaseDTO {
 
     public void setOnline(boolean online){
         this.online = online;
+    }
+
+    public String getLastActivityDatetime(){
+        return this.lastActivityDatetime;
+    }
+
+    public String getCheckinDatetime(){
+        return this.checkinDatetime;
     }
 
     public JSONObject toJSONObject(){

@@ -90,9 +90,10 @@ public class ChatFragment extends Fragment {
                         intent.putExtra(RestService.LOGIN_TOKEN, myToken);
                         intent.putExtra(RestService.CHAT_RECEPTOR_USERNAME, (contactsWithConvs.get(position)).split("&")[0]);
                         intent.putExtra(RestService.CHAT_RECEPTOR_FULLNAME, (contactsWithConvs.get(position)).split("&")[1]);
-                        intent.putExtra(RestService.CHAT_RECEPTOR_STATE, (contactsWithConvs.get(position)).split("&")[2]);
-                        if((contactsWithConvs.get(position)).split("&").length > 3){
-                            intent.putExtra(RestService.LOGIN_IMAGE, (contactsWithConvs.get(position)).split("&")[3]);
+                        intent.putExtra(RestService.CHAT_RECEPTOR_LOCATION, (contactsWithConvs.get(position)).split("&")[2]);
+                        intent.putExtra(RestService.CHAT_RECEPTOR_STATE, (contactsWithConvs.get(position)).split("&")[3]);
+                        if((contactsWithConvs.get(position)).split("&").length > 4){
+                            intent.putExtra(RestService.LOGIN_IMAGE, (contactsWithConvs.get(position)).split("&")[4]);
                         }
                         startActivity(intent);
                     }
@@ -155,8 +156,10 @@ public class ChatFragment extends Fragment {
     public String loadContact(UserDTO user){
         String contact = user.getUsername() + "&" + user.getName();
         String contactLocation = user.getLocation();
-        if(contactLocation != ""){
-            contact = contact + " - " + contactLocation;
+        if(contactLocation != null){
+            contact = contact + "&" + contactLocation;
+        }else{
+            contact = contact + "&" + "";
         }
         if(user.isOnline()){
             contact = contact + "&" + "(Conectado)";
