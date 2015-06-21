@@ -2,9 +2,6 @@ package grupo3.tallerprogramacion2.mensajero.dto;
 
 import java.util.ArrayList;
 
-/**
- * Created by uriel on 02/06/15.
- */
 public class ChatMessageDTOContainer extends BaseDTO{
 
     private ArrayList<ChatMessageDTO> data;

@@ -40,6 +40,9 @@ import grupo3.tallerprogramacion2.mensajero.dto.UserDTOContainer;
 import grupo3.tallerprogramacion2.mensajero.factory.RequestQueueFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
+/**
+ * Implementacion de {@link RestService} que encapsula toda la interaccion con la rest API del servidor.
+ */
 public class RestServiceImpl implements RestService {
 
     private static RestServiceImpl ourInstance = null;
@@ -55,6 +58,12 @@ public class RestServiceImpl implements RestService {
     protected RestServiceImpl() {
     }
 
+    /**
+     * @param username
+     * @param password
+     * @param context
+     * @throws JSONException
+     */
     @Override
     public void login(final String username, final String password, final LoginActivity context) throws JSONException{
         String url = UrlConstants.getLoginServiceUrl();
@@ -97,6 +106,12 @@ public class RestServiceImpl implements RestService {
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param username
+     * @param password
+     * @param context
+     * @throws JSONException
+     */
     @Override
     public void login(final String username, final String password, final InitActivity context) throws JSONException{
         String url = UrlConstants.getLoginServiceUrl();
@@ -138,6 +153,12 @@ public class RestServiceImpl implements RestService {
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param userName
+     * @param fullName
+     * @param password
+     * @param context
+     */
     @Override
     public void createUser(final String userName, final String fullName, final String password, final CreateUserActivity context) {
         String url = UrlConstants.getCreateUserServiceUrl();
@@ -177,6 +198,12 @@ public class RestServiceImpl implements RestService {
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param username
+     * @param token
+     * @param fragment
+     * @param context
+     */
     @Override
     public void getConversations(final String username, final String token, final ChatFragment fragment, final FragmentActivity context) {
         String url = UrlConstants.getConversationServiceUrl();
@@ -212,6 +239,11 @@ public class RestServiceImpl implements RestService {
         RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param username
+     * @param token
+     * @param context
+     */
     @Override
     public void logOut(final String username, final String token, final HomeActivity context) {
         String url = UrlConstants.getLogoutServiceUrl();
@@ -242,6 +274,12 @@ public class RestServiceImpl implements RestService {
         RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param username
+     * @param token
+     * @param fragment
+     * @param context
+     */
     @Override
     public void getUsers(final String username, final String token, final ContactFragment fragment, final FragmentActivity context){
         String url = UrlConstants.getUserServiceUrl();
@@ -280,6 +318,12 @@ public class RestServiceImpl implements RestService {
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param username
+     * @param token
+     * @param fragment
+     * @param context
+     */
     @Override
     public void getUsers(final String username, final String token, final ChatFragment fragment, final FragmentActivity context){
         String url = UrlConstants.getUserServiceUrl();
@@ -318,6 +362,11 @@ public class RestServiceImpl implements RestService {
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param token
+     * @param message
+     * @param context
+     */
     @Override
     public void sendMessage(final String token, final ChatMessageDTO message, final ChatActivity context) {
         String url = UrlConstants.getMessageServiceUrl();
@@ -363,6 +412,12 @@ public class RestServiceImpl implements RestService {
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param username
+     * @param token
+     * @param receptor
+     * @param context
+     */
     @Override
     public void getMessages(final String username, final String token, final String receptor, final ChatActivity context) {
         String url = UrlConstants.getMessageServiceUrl() + "?username=" + receptor;
@@ -408,6 +463,12 @@ public class RestServiceImpl implements RestService {
         RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param username
+     * @param token
+     * @param user
+     * @param context
+     */
     public void updateUser(final String username, final String token, UserDTO user, final EditUserActivity context){
         String url = UrlConstants.getUserServiceUrl();
 
@@ -444,6 +505,11 @@ public class RestServiceImpl implements RestService {
         RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param username
+     * @param token
+     * @param context
+     */
     @Override
     public void getUser(final String username, final String token, final EditUserActivity context){
         String url = UrlConstants.getUserServiceUrl() +  "?username=" + username;
@@ -479,6 +545,12 @@ public class RestServiceImpl implements RestService {
         Request response = RequestQueueFactory.getRequestQueue(context).add(req);
     }
 
+    /**
+     * @param username
+     * @param token
+     * @param receptorUsername
+     * @param context
+     */
     @Override
     public void getUser(final String username, final String token, String receptorUsername, final UserDetailActivity context){
         String url = UrlConstants.getUserServiceUrl() +  "?username=" + receptorUsername;

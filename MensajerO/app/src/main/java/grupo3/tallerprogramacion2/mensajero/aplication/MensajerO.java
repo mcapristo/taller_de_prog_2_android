@@ -11,9 +11,6 @@ import java.util.ArrayList;
 
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 
-/**
- * Created by uriel on 11/06/15.
- */
 public class MensajerO extends Application {
     private ArrayList<UserDTO> users;
 

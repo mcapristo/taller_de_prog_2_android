@@ -1,8 +1,5 @@
 package grupo3.tallerprogramacion2.mensajero.dto;
 
-/**
- * Created by uriel on 30/05/15.
- */
 public class ChatMessageDTO {
     private String id;
     private boolean left;

@@ -1,5 +1,8 @@
 package grupo3.tallerprogramacion2.mensajero.constants;
 
+/**
+ * Contiene constantes para los errores de la REST API
+ */
 public class ResponseConstants {
 
     public static final String ERROR_RESPONSE = "ERROR";

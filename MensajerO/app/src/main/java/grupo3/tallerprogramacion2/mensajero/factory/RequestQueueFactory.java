@@ -7,6 +7,9 @@ import com.android.volley.toolbox.Volley;
 
 import grupo3.tallerprogramacion2.mensajero.network.mock.HttpStackMock;
 
+/**
+ * Factory que encapsula la instancia de RequestQueue a utilizar.
+ */
 public class RequestQueueFactory {
 
     private static boolean useMockedServer = false;

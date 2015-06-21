@@ -20,6 +20,9 @@ import grupo3.tallerprogramacion2.mensajero.activity.UserDetailActivity;
 import grupo3.tallerprogramacion2.mensajero.dto.ChatMessageDTO;
 import grupo3.tallerprogramacion2.mensajero.dto.UserDTO;
 
+/**
+ * Interfaz que define la interaccion con la rest API del servidor.
+ */
 public interface RestService {
     public final static String RESPONSE_CODE = "grupo3.tallerprogramacion2.mensajero.service.RestService.CODE";
     public final static String LOGIN_RESPONSE_NAME = "grupo3.tallerprogramacion2.mensajero.service.RestService.LOGIN_RESPONSE_NAME";

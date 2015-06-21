@@ -26,7 +26,7 @@ import java.util.Map;
 import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
 
 /**
- * Fake {@link HttpStack} that returns the fake content using resource file in res/raw.
+ * Fake {@link HttpStack} para propositos de testing o trabajar sin conexion a la rest API.
  */
 public class HttpStackMock implements HttpStack {
     private static final String DEFAULT_JSON_RESPONSE = " {\"a\":1,\"b\":2,\"c\":3}";

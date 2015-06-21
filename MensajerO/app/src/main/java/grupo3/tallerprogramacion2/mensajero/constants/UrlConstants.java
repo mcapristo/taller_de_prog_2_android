@@ -1,5 +1,8 @@
 package grupo3.tallerprogramacion2.mensajero.constants;
 
+/**
+ * Constantes para armado de url's con las cuales se invocará a la rest API.
+ */
 public class UrlConstants {
 
     //public static final String BASE_URL = "10.0.2.2";
