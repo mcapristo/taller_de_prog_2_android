@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class RestServiceTestCase extends TestCase {
-
+/*
     private RestService restService =  RestServiceImpl.getInstance();
     private String JSON_LOGIN_RESPONSE_OK = "{result:'OK', username:'mcapristo', name:'Matias', token:'ABC123123'}";
     private HttpStack httpStack;
@@ -53,6 +53,6 @@ public class RestServiceTestCase extends TestCase {
         assertEquals("ABC123123", argument.getValue().getToken());
     }
 
-
+*/
 
 }
