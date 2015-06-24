@@ -208,6 +208,7 @@ public class EditUserActivity extends ActionBarActivity {
 
     public void setLocation(Location loc){
         //Obtener el barrio a partir de la latitud y la longitud (necesita conectividad a internet)
+        mlocManager.removeUpdates((LocationListener) mlocListener);
         if(loc != null && loc.getLatitude() !=0.0 && loc.getLongitude() != 0.0) {
             try {
                 Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -228,8 +229,6 @@ public class EditUserActivity extends ActionBarActivity {
                     this.location = loc;
                     TextView locationTextView = (TextView)findViewById(R.id.lastLocation);
                     locationTextView.setText(dir);
-
-                    mlocManager.removeUpdates((LocationListener) mlocListener);
 
                     //send to server
                     UserDTO modifiedUser = new UserDTO();
@@ -311,15 +310,6 @@ public class EditUserActivity extends ActionBarActivity {
 
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            /*mEditUserFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mEditUserFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mEditUserFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });*/
-
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mProgressView.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
@@ -329,10 +319,7 @@ public class EditUserActivity extends ActionBarActivity {
                 }
             });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            //mEditUserFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 

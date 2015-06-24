@@ -144,16 +144,7 @@ public class ChatActivity extends ActionBarActivity {
             i.putExtra(RestService.LOGIN_RESPONSE_NAME, this.myUsername);
             i.putExtra(RestService.LOGIN_TOKEN, this.myToken);
             i.putExtra(RestService.CHAT_RECEPTOR_USERNAME, this.recpetorUsername);
-            /*i.putExtra(RestService.LOGIN_FULL_NAME, this.recpetorFullname);
-            i.putExtra(RestService.CHAT_RECEPTOR_STATE, this.receptorState);
-            i.putExtra(RestService.CHAT_RECEPTOR_LOCATION, this.receptorLocation);
-            i.putExtra(RestService.LOGIN_IMAGE, this.receptorProfileImage);*/
             startActivity(i);
-            return true;
-        }
-
-        if (id == R.id.action_exit) {
-            finish();
             return true;
         }
 
