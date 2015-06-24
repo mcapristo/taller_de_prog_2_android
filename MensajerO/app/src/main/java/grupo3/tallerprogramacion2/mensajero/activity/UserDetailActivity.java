@@ -36,20 +36,6 @@ public class UserDetailActivity extends ActionBarActivity {
         String receptorUsername = args.getString(RestService.CHAT_RECEPTOR_USERNAME);
 
         restService.getUser(username, token, receptorUsername, this);
-
-        /*UserDTO user = new UserDTO();
-        user.setUsername(args.getString(RestService.LOGIN_RESPONSE_NAME));
-        user.setName(args.getString(RestService.LOGIN_FULL_NAME));
-        user.setProfileImage(args.getString(RestService.LOGIN_IMAGE));
-        user.setLocation(args.getString(RestService.CHAT_RECEPTOR_LOCATION));
-
-        if(args.getString(RestService.CHAT_RECEPTOR_STATE).equals("(Conectado)")){
-            user.setOnline(true);
-        }else {
-            user.setOnline(false);
-        }
-
-        this.completeFields(user);*/
     }
 
     public void populateData(UserDTO user){
@@ -71,7 +57,9 @@ public class UserDetailActivity extends ActionBarActivity {
             locationTextView.setText(user.getLocation() + " - " + user.getCheckinDatetime());
         }
 
-        lastActivityTextView.setText(user.getCheckinDatetime());
+        String a = user.getCheckinDatetime();
+
+        lastActivityTextView.setText(user.getLastActivityDatetime());
 
         if(user.getProfileImage() != null){
             Bitmap image = MensajerO.decodeBase64(user.getProfileImage());

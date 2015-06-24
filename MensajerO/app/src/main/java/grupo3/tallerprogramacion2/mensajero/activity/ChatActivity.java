@@ -69,7 +69,11 @@ public class ChatActivity extends ActionBarActivity {
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setTitle(this.recpetorFullname + this.receptorState);
+        String title = this.recpetorFullname;
+        if(this.receptorState != null){
+            title = title + this.receptorState;
+        }
+        actionBar.setTitle(title);
 
         buttonSend = (Button) findViewById(R.id.buttonSend);
 
