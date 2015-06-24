@@ -84,11 +84,6 @@ public class LoginActivity extends ActionBarActivity {
             return true;
         }
 
-        if (id == R.id.action_exit) {
-            finish();
-            System.exit(0);
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
