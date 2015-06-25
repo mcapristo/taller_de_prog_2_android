@@ -36,20 +36,6 @@ public class UserDetailActivity extends ActionBarActivity {
         String receptorUsername = args.getString(RestService.CHAT_RECEPTOR_USERNAME);
 
         restService.getUser(username, token, receptorUsername, this);
-
-        /*UserDTO user = new UserDTO();
-        user.setUsername(args.getString(RestService.LOGIN_RESPONSE_NAME));
-        user.setName(args.getString(RestService.LOGIN_FULL_NAME));
-        user.setProfileImage(args.getString(RestService.LOGIN_IMAGE));
-        user.setLocation(args.getString(RestService.CHAT_RECEPTOR_LOCATION));
-
-        if(args.getString(RestService.CHAT_RECEPTOR_STATE).equals("(Conectado)")){
-            user.setOnline(true);
-        }else {
-            user.setOnline(false);
-        }
-
-        this.completeFields(user);*/
     }
 
     public void populateData(UserDTO user){
@@ -71,7 +57,9 @@ public class UserDetailActivity extends ActionBarActivity {
             locationTextView.setText(user.getLocation() + " - " + user.getCheckinDatetime());
         }
 
-        lastActivityTextView.setText(user.getCheckinDatetime());
+        String a = user.getCheckinDatetime();
+
+        lastActivityTextView.setText(user.getLastActivityDatetime());
 
         if(user.getProfileImage() != null){
             Bitmap image = MensajerO.decodeBase64(user.getProfileImage());
@@ -82,27 +70,5 @@ public class UserDetailActivity extends ActionBarActivity {
     public void handleUnexpectedError(int errorCode) {
         this.errorDialog = (new ExceptionsHandle(this, errorCode)).loadError();
         this.errorDialog.show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_user_detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

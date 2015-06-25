@@ -1,6 +1,8 @@
 package grupo3.tallerprogramacion2.mensajero.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -9,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import grupo3.tallerprogramacion2.mensajero.R;
+import grupo3.tallerprogramacion2.mensajero.constants.UrlConstants;
 import grupo3.tallerprogramacion2.mensajero.factory.RestServiceFactory;
 import grupo3.tallerprogramacion2.mensajero.service.RestService;
 
@@ -89,6 +92,11 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         if (id == R.id.action_logOut) {
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(UrlConstants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(RestService.LOGIN_RESPONSE_NAME, "");
+            editor.putString(RestService.LOGIN_PASSWORD, "");
+            editor.commit();
             restService.logOut(username, token, this);
         }
 
